@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Monitoring Lamaran Kerja - Fernando Hasiholan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8; 
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            height: 300px;
+            margin: auto;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .status-pill {
+            transition: all 0.2s ease;
+        }
+        .status-pill:hover {
+            transform: scale(1.05);
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 24px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+    </style>
+    <!-- Chosen Palette: Professional Blue-Grey with Semantic Status Colors -->
+    <!-- Application Structure Plan: Dashboard layout with 4 main sections: 1. Executive Summary (KPIs), 2. Pipeline Visualization (Charts), 3. Action Center (Upcoming Tasks), 4. Detailed List (Filterable Table). This structure prioritizes immediate action items while providing a high-level overview of progress. -->
+    <!-- Visualization & Content Choices: 
+         - Stats Cards: Immediate view of total pipeline and categorized counts.
+         - Doughnut Chart: Visual distribution of application statuses (Hot, Warm, Passive, Closed).
+         - Bar Chart: Application timeline/aging analysis.
+         - Interactive List: Filterable table for detailed tracking. 
+         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="text-gray-800">
+
+    <!-- Top Navigation / Header -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <span class="text-2xl font-bold text-blue-900">JobTracker<span class="text-blue-500">.</span></span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <button onclick="switchTab('dashboard')" class="nav-btn border-blue-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" id="btn-dashboard">Dashboard</button>
+                        <button onclick="switchTab('pipeline')" class="nav-btn border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium" id="btn-pipeline">Pipeline Detail</button>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="text-right mr-4 hidden sm:block">
+                        <p class="text-sm font-medium text-gray-900">Fernando Hasiholan, SE., CTT, CPTT</p>
+                        <p class="text-xs text-gray-500">Last Updated: 4 Des 2025</p>
+                    </div>
+                    <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">FH</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- DASHBOARD VIEW -->
+        <div id="view-dashboard" class="space-y-6 animate-fade-in">
+            
+            <!-- Introduction Section -->
+            <div class="bg-blue-900 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
+                <div class="relative z-10">
+                    <h1 class="text-2xl font-bold mb-2">Selamat Siang, Pak Fernando!</h1>
+                    <p class="text-blue-100 max-w-2xl">
+                        Laporan monitoring hari ini menunjukkan <span class="font-bold text-white">19 perusahaan</span> dalam pipeline Anda. 
+                        Fokus utama hari ini adalah Interview Online dengan <span class="font-bold text-yellow-300">PT Citarasa Kuliner (CRK)</span> pukul 13.30 WIB.
+                    </p>
+                </div>
+                <div class="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-blue-800 to-transparent opacity-50"></div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Card 1 -->
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Total Pipeline</p>
+                            <h3 class="text-3xl font-bold text-gray-900 mt-1">19</h3>
+                        </div>
+                        <div class="p-2 bg-blue-50 rounded-lg text-blue-600">
+                            <span class="text-xl">📊</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-xs text-gray-500">Active Applications</div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-l-4 border-green-500 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Hot Prospects</p>
+                            <h3 class="text-3xl font-bold text-green-600 mt-1">6</h3>
+                        </div>
+                        <div class="p-2 bg-green-50 rounded-lg text-green-600">
+                            <span class="text-xl">🔥</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-xs text-green-600 font-medium">Interview / Waiting Result</div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-l-4 border-yellow-400 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Warm Follow-Up</p>
+                            <h3 class="text-3xl font-bold text-yellow-600 mt-1">9</h3>
+                        </div>
+                        <div class="p-2 bg-yellow-50 rounded-lg text-yellow-600">
+                            <span class="text-xl">📩</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-xs text-yellow-600 font-medium">Active Communication</div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wider">Interview Scheduled</p>
+                            <h3 class="text-3xl font-bold text-indigo-600 mt-1">2</h3>
+                        </div>
+                        <div class="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+                            <span class="text-xl">📅</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-xs text-indigo-600 font-medium">CRK (Hari Ini) & Kirim.id (Besok)</div>
+                </div>
+            </div>
+
+            <!-- Charts & Action Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Chart Section -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Distribusi Status Lamaran</h3>
+                    <div class="chart-container">
+                        <canvas id="pipelineChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Priority Action List -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">
+                        <span class="flex h-3 w-3 relative mr-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                        </span>
+                        Action Plan Hari Ini
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-red-50 border border-red-100 rounded-lg">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-bold text-red-800 text-sm">URGENT</span>
+                                <span class="text-xs text-red-600 font-mono bg-white px-2 py-0.5 rounded border border-red-200">13.30 WIB</span>
+                            </div>
+                            <h4 class="font-bold text-gray-900">Interview Online CRK</h4>
+                            <p class="text-sm text-gray-600 mt-1">Siapkan Google Meet & Materi Inventory Control.</p>
+                        </div>
+
+                        <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-lg">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-bold text-indigo-800 text-sm">PREPARATION</span>
+                                <span class="text-xs text-indigo-600 font-mono bg-white px-2 py-0.5 rounded border border-indigo-200">Besok</span>
+                            </div>
+                            <h4 class="font-bold text-gray-900">Riset Kirim Kirim ID</h4>
+                            <p class="text-sm text-gray-600 mt-1">Pelajari profil Pak Andrew (Founder) & Business Model.</p>
+                        </div>
+
+                        <div class="p-4 bg-yellow-50 border border-yellow-100 rounded-lg">
+                            <div class="flex justify-between items-start mb-1">
+                                <span class="font-bold text-yellow-800 text-sm">MONITORING</span>
+                                <span class="text-xs text-yellow-600 font-mono bg-white px-2 py-0.5 rounded border border-yellow-200">Ongoing</span>
+                            </div>
+                            <h4 class="font-bold text-gray-900">Cek Respon Chat</h4>
+                            <p class="text-sm text-gray-600 mt-1">Pantau balasan dari Wingstop, AEON & Lalamove.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PIPELINE DETAIL VIEW -->
+        <div id="view-pipeline" class="hidden space-y-6">
+            
+            <!-- Filter Bar -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 sticky top-20 z-40">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div class="flex space-x-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0">
+                        <button onclick="filterTable('all')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white shadow-sm ring-1 ring-blue-600" data-filter="all">Semua</button>
+                        <button onclick="filterTable('hot')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700 hover:bg-gray-50 ring-1 ring-gray-300" data-filter="hot">Hot Prospects 🟢</button>
+                        <button onclick="filterTable('warm')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700 hover:bg-gray-50 ring-1 ring-gray-300" data-filter="warm">Warm Follow-Up 🟡</button>
+                        <button onclick="filterTable('passive')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700 hover:bg-gray-50 ring-1 ring-gray-300" data-filter="passive">Passive ⚪</button>
+                        <button onclick="filterTable('closed')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700 hover:bg-gray-50 ring-1 ring-gray-300" data-filter="closed">Closed 🔴</button>
+                    </div>
+                    <div class="relative w-full sm:w-64">
+                        <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Cari Perusahaan..." class="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <span class="absolute left-3 top-2.5 text-gray-400">🔍</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Container -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+                                    Tgl Kontak
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Perusahaan & Posisi
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Status Terkini
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Next Action
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Group
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="pipelineTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Empty State -->
+                <div id="emptyState" class="hidden p-12 text-center">
+                    <p class="text-gray-500 text-lg">Tidak ada data lamaran yang cocok dengan filter.</p>
+                </div>
+            </div>
+
+            <div class="text-center text-sm text-gray-400 py-4">
+                Menampilkan <span id="showingCount">0</span> dari <span id="totalCount">0</span> lamaran
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Data Source
+        const applications = [
+            { date: "04 Des", company: "Kirim Kirim ID", position: "FAT Manager", contact: "Dina/Pak Andrew", status: "💎 INTERVIEW FOUNDER", detail: "Besok (Jumat, 5 Des) - Offline", action: "Persiapan Materi", group: "hot", color: "green" },
+            { date: "28 Nov", company: "PT Citarasa Kuliner", position: "Finance Manager", contact: "Pak Putra", status: "🟢 INTERVIEW ONLINE", detail: "Hari ini (Kamis, 13.30 WIB)", action: "Hadir Tepat Waktu", group: "hot", color: "green" },
+            { date: "27 Nov", company: "PT AQS Group (Apex)", position: "Finance Manager", contact: "Bu Maygan", status: "🟢 ON TRACK", detail: "Menunggu feedback klien (Tes Selesai)", action: "Tunggu Info Chat", group: "hot", color: "green" },
+            { date: "25 Nov", company: "ProEd Global (Bali)", position: "Fin. Controller", contact: "Pak Nyoman", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Online Test", action: "Cek LinkedIn", group: "hot", color: "green" },
+            { date: "14 Nov", company: "PT LinkIT 360", position: "CFO", contact: "Qikan", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Retake Psikotes", action: "Cek WA Berkala", group: "hot", color: "green" },
+            { date: "13 Nov", company: "PT Beeme (TalentHR)", position: "FAT Manager", contact: "Pak Ari", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Psikotes", action: "Cek WA Berkala", group: "hot", color: "green" },
+            { date: "03 Des", company: "NPCT1", position: "Acc. Executive", contact: "Pak Arbi", status: "💎 VIP REFERRAL", detail: "CV terkirim via WA pribadi", action: "Tunggu Respon Personal", group: "warm", color: "yellow" },
+            { date: "28 Nov", company: "SML (Semarang)", position: "F&A Manager", contact: "Bu Debby", status: "📩 CHAT TERKIRIM", detail: "Konfirmasi email via LinkedIn (3 Des)", action: "Pantau LinkedIn", group: "warm", color: "yellow" },
+            { date: "27 Nov", company: "PT Capitol Group", position: "FAM / Chief FA", contact: "Bu Tata", status: "📩 CHAT TERKIRIM", detail: "Menyundul lamaran email (2 Des)", action: "Pantau LinkedIn", group: "warm", color: "yellow" },
+            { date: "27 Nov", company: "Louis Kienne", position: "Chief Accounting", contact: "Bu Dewi", status: "📩 CHAT TERKIRIM", detail: "Konfirmasi email via LinkedIn (3 Des)", action: "Pantau LinkedIn", group: "warm", color: "yellow" },
+            { date: "25 Nov", company: "Lancesoft Indonesia", position: "F&A Manager", contact: "Bu Mutiara", status: "📩 CHAT TERKIRIM", detail: "Menanyakan kelanjutan short call (3 Des)", action: "Tunggu Respon", group: "warm", color: "yellow" },
+            { date: "17 Nov", company: "Youvit", position: "Jr. Acc Mgr", contact: "Pak Rifai", status: "📩 CHAT TERKIRIM", detail: "Meminta kepastian pasca Interview User (2 Des)", action: "Tunggu Respon", group: "warm", color: "yellow" },
+            { date: "14 Nov", company: "Lalamove", position: "Finance Mgr", contact: "Pak Rizky", status: "📩 CHAT TERKIRIM", detail: "\"Final Check\" kepastian status (4 Des)", action: "Tunggu 2-3 Hari", group: "warm", color: "yellow" },
+            { date: "21 Okt", company: "AEON Credit Service", position: "Tax Section", contact: "Bu Vadia", status: "📩 CHAT TERKIRIM", detail: "Menagih janji HR Interview (4 Des)", action: "Tunggu Balasan", group: "warm", color: "yellow" },
+            { date: "16 Okt", company: "Wingstop Indonesia", position: "Finance & Acc", contact: "Bu Atika", status: "📩 CHAT TERKIRIM", detail: "Menanyakan kepastian status (4 Des)", action: "Tunggu Balasan", group: "warm", color: "yellow" },
+            { date: "23 Nov", company: "Kreston Indonesia", position: "Assoc. Tax Mgr", contact: "Bu Liya", status: "⚪ NO NEWS", detail: "Tidak ada kabar > 1 minggu", action: "Pasif", group: "passive", color: "gray" },
+            { date: "12 Nov", company: "Mitsui & Co. (Persol)", position: "Finance Manager", contact: "Bu Deta", status: "⏳ WAITING USER", detail: "Menunggu review User Mitsui", action: "Pasif", group: "passive", color: "gray" },
+            { date: "13 Nov", company: "PT Hana Fashion", position: "Fin/Acc Mgr", contact: "HR", status: "🛑 ON HOLD", detail: "-", action: "Arsip", group: "closed", color: "red" },
+            { date: "08 Nov", company: "Marina Dev. (MDI)", position: "Acc & Tax Mgr", contact: "Bu Tasya", status: "🛑 REJECTED", detail: "Info Redy", action: "Arsip", group: "closed", color: "red" }
+        ];
+
+        // Chart Configuration
+        function initChart() {
+            const ctx = document.getElementById('pipelineChart').getContext('2d');
+            
+            const groupCounts = {
+                hot: applications.filter(a => a.group === 'hot').length,
+                warm: applications.filter(a => a.group === 'warm').length,
+                passive: applications.filter(a => a.group === 'passive').length,
+                closed: applications.filter(a => a.group === 'closed').length
+            };
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Hot Prospects (6)', 'Warm Follow-Up (9)', 'Passive (2)', 'Closed (2)'],
+                    datasets: [{
+                        data: [groupCounts.hot, groupCounts.warm, groupCounts.passive, groupCounts.closed],
+                        backgroundColor: [
+                            '#22c55e', // green-500
+                            '#eab308', // yellow-500
+                            '#9ca3af', // gray-400
+                            '#ef4444'  // red-500
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                font: {
+                                    family: "'Inter', sans-serif",
+                                    size: 12
+                                },
+                                usePointStyle: true,
+                                padding: 20
+                            }
+                        }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+
+        // Table Render Function
+        function renderTable(filter = 'all', search = '') {
+            const tbody = document.getElementById('pipelineTableBody');
+            tbody.innerHTML = '';
+            
+            const filteredData = applications.filter(app => {
+                const matchesFilter = filter === 'all' || app.group === filter;
+                const matchesSearch = app.company.toLowerCase().includes(search.toLowerCase()) || 
+                                      app.position.toLowerCase().includes(search.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+
+            document.getElementById('showingCount').textContent = filteredData.length;
+            document.getElementById('totalCount').textContent = applications.length;
+
+            if (filteredData.length === 0) {
+                document.getElementById('emptyState').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('emptyState').classList.add('hidden');
+
+            filteredData.forEach(app => {
+                let badgeClass = '';
+                if(app.group === 'hot') badgeClass = 'bg-green-100 text-green-800 border border-green-200';
+                else if(app.group === 'warm') badgeClass = 'bg-yellow-100 text-yellow-800 border border-yellow-200';
+                else if(app.group === 'passive') badgeClass = 'bg-gray-100 text-gray-600 border border-gray-200';
+                else badgeClass = 'bg-red-100 text-red-800 border border-red-200';
+
+                const row = `
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-sm font-medium text-gray-900">${app.date}</div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <div class="flex items-center">
+                                <div>
+                                    <div class="text-sm font-bold text-gray-900">${app.company}</div>
+                                    <div class="text-xs text-gray-500">${app.position}</div>
+                                    <div class="text-xs text-gray-400 mt-1">PIC: ${app.contact}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${badgeClass}">
+                                ${app.status}
+                            </span>
+                            <div class="text-xs text-gray-500 mt-1 max-w-xs break-words">${app.detail}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                            <div class="flex items-center">
+                                <span class="mr-2">👉</span>
+                                ${app.action}
+                            </div>
+                        </td>
+                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div class="h-2.5 w-2.5 rounded-full inline-block ${app.color === 'green' ? 'bg-green-500' : app.color === 'yellow' ? 'bg-yellow-500' : app.color === 'red' ? 'bg-red-500' : 'bg-gray-400'}"></div>
+                        </td>
+                    </tr>
+                `;
+                tbody.insertAdjacentHTML('beforeend', row);
+            });
+        }
+
+        // Interaction Functions
+        function switchTab(tabName) {
+            const dashboardBtn = document.getElementById('btn-dashboard');
+            const pipelineBtn = document.getElementById('btn-pipeline');
+            const dashboardView = document.getElementById('view-dashboard');
+            const pipelineView = document.getElementById('view-pipeline');
+
+            if (tabName === 'dashboard') {
+                dashboardView.classList.remove('hidden');
+                pipelineView.classList.add('hidden');
+                
+                dashboardBtn.classList.add('border-blue-500', 'text-gray-900');
+                dashboardBtn.classList.remove('border-transparent', 'text-gray-500');
+                
+                pipelineBtn.classList.remove('border-blue-500', 'text-gray-900');
+                pipelineBtn.classList.add('border-transparent', 'text-gray-500');
+            } else {
+                dashboardView.classList.add('hidden');
+                pipelineView.classList.remove('hidden');
+                
+                pipelineBtn.classList.add('border-blue-500', 'text-gray-900');
+                pipelineBtn.classList.remove('border-transparent', 'text-gray-500');
+                
+                dashboardBtn.classList.remove('border-blue-500', 'text-gray-900');
+                dashboardBtn.classList.add('border-transparent', 'text-gray-500');
+                
+                // Refresh table layout on first view
+                renderTable();
+            }
+        }
+
+        function filterTable(group) {
+            // Update buttons visual state
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                if(btn.dataset.filter === group) {
+                    btn.classList.add('bg-blue-600', 'text-white', 'ring-blue-600');
+                    btn.classList.remove('bg-white', 'text-gray-700', 'ring-gray-300');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white', 'ring-blue-600');
+                    btn.classList.add('bg-white', 'text-gray-700', 'ring-gray-300');
+                }
+            });
+            
+            const searchValue = document.getElementById('searchInput').value;
+            renderTable(group, searchValue);
+        }
+
+        function searchTable() {
+            const activeFilter = document.querySelector('.filter-btn.bg-blue-600').dataset.filter;
+            const searchValue = document.getElementById('searchInput').value;
+            renderTable(activeFilter, searchValue);
+        }
+
+        // Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            initChart();
+            renderTable();
+        });
+
+    </script>
+</body>
+</html>
