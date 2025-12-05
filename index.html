@@ -17,6 +17,8 @@
         .status-pill { transition: all 0.2s ease; }
         .status-pill:hover { transform: scale(1.05); }
     </style>
+    <!-- Chosen Palette: Professional Blue-Grey with Semantic Status Colors -->
+    <!-- Application Structure Plan: Dashboard layout. Updated KKID action to Waiting HR. Total 24 Pipelines. -->
 </head>
 <body class="text-gray-800">
 
@@ -33,7 +35,7 @@
                 <div class="flex items-center">
                     <div class="text-right mr-4 hidden sm:block">
                         <p class="text-sm font-medium text-gray-900">Fernando Hasiholan, SE., CTT, CPTT</p>
-                        <p class="text-xs text-gray-500">Last Updated: Jumat, 5 Des (22:00 WIB)</p>
+                        <p class="text-xs text-gray-500">Last Updated: Sabtu, 6 Des (Pagi)</p>
                     </div>
                     <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">FH</div>
                 </div>
@@ -46,10 +48,10 @@
         <div id="view-dashboard" class="space-y-6 animate-fade-in">
             <div class="bg-blue-900 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
                 <div class="relative z-10">
-                    <h1 class="text-2xl font-bold mb-2">Deal! Interview NAT Terjadwal</h1>
+                    <h1 class="text-2xl font-bold mb-2">Mode Sabtu: Tenang & Strategis</h1>
                     <p class="text-blue-100 max-w-2xl">
-                        Jadwal Interview Online dengan <span class="font-bold text-yellow-300">NAT Indonesia</span> telah dikunci untuk <strong>Selasa, 10 Des (12.00 WIB)</strong>.
-                        Ini menambah daftar Hot Prospects Bapak menjadi 8 perusahaan.
+                        Untuk <strong>Kirim Kirim ID</strong>, kita menunggu kabar dari HR/Tim Pak Andrew.
+                        Fokus hari ini: Memantau konfirmasi jadwal dari <strong>NAT Indonesia</strong> (untuk Senin).
                     </p>
                 </div>
                 <div class="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-blue-800 to-transparent opacity-50"></div>
@@ -62,21 +64,21 @@
                         <div><p class="text-xs font-medium text-gray-500 uppercase">Total Pipeline</p><h3 class="text-3xl font-bold text-gray-900 mt-1" id="kpi-total">0</h3></div>
                         <div class="p-2 bg-blue-50 rounded-lg text-blue-600"><span class="text-xl">📊</span></div>
                     </div>
-                    <div class="mt-4 text-xs text-gray-500">Active & Closed</div>
+                    <div class="mt-4 text-xs text-gray-500">Updated: KKID (Waiting)</div>
                 </div>
                 <div class="bg-white rounded-xl p-5 shadow-sm border border-l-4 border-green-500 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start">
                         <div><p class="text-xs font-medium text-gray-500 uppercase">Hot Prospects</p><h3 class="text-3xl font-bold text-green-600 mt-1" id="kpi-hot">0</h3></div>
                         <div class="p-2 bg-green-50 rounded-lg text-green-600"><span class="text-xl">🔥</span></div>
                     </div>
-                    <div class="mt-4 text-xs text-green-600 font-medium">+1 NAT (Scheduled)</div>
+                    <div class="mt-4 text-xs text-green-600 font-medium">Interview Scheduled/Done</div>
                 </div>
                 <div class="bg-white rounded-xl p-5 shadow-sm border border-l-4 border-yellow-400 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start">
                         <div><p class="text-xs font-medium text-gray-500 uppercase">Warm Follow-Up</p><h3 class="text-3xl font-bold text-yellow-600 mt-1" id="kpi-warm">0</h3></div>
                         <div class="p-2 bg-yellow-50 rounded-lg text-yellow-600"><span class="text-xl">📩</span></div>
                     </div>
-                    <div class="mt-4 text-xs text-yellow-600 font-medium">-1 NAT (Moved to Hot)</div>
+                    <div class="mt-4 text-xs text-yellow-600 font-medium">Waiting Response</div>
                 </div>
                 <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start">
@@ -94,17 +96,22 @@
                     <div class="chart-container"><canvas id="pipelineChart"></canvas></div>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-4">Action Plan</h3>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">Action Plan (Sabtu)</h3>
                     <div class="space-y-4">
-                        <div class="p-4 bg-green-50 border border-green-100 rounded-lg">
-                            <div class="flex justify-between mb-1"><span class="font-bold text-green-800 text-sm">INTERVIEW</span><span class="text-xs text-green-600 bg-white px-2 py-0.5 rounded border border-green-200">Selasa Depan</span></div>
-                            <h4 class="font-bold text-gray-900">NAT Indonesia</h4>
-                            <p class="text-sm text-gray-600 mt-1">Siapkan materi Coretax & Negosiasi Pajak.</p>
-                        </div>
                         <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-lg">
-                            <div class="flex justify-between mb-1"><span class="font-bold text-indigo-800 text-sm">WAITING</span><span class="text-xs text-indigo-600 bg-white px-2 py-0.5 rounded border border-indigo-200">Next Week</span></div>
+                            <div class="flex justify-between mb-1"><span class="font-bold text-indigo-800 text-sm">WAITING</span><span class="text-xs text-indigo-600 bg-white px-2 py-0.5 rounded border border-indigo-200">Weekend</span></div>
                             <h4 class="font-bold text-gray-900">Kirim Kirim ID</h4>
-                            <p class="text-sm text-gray-600 mt-1">Menunggu Offering pasca Interview Founder.</p>
+                            <p class="text-sm text-gray-600 mt-1">Menunggu update hasil interview dari HR/Tim Pak Andrew.</p>
+                        </div>
+                        <div class="p-4 bg-green-50 border border-green-100 rounded-lg">
+                            <div class="flex justify-between mb-1"><span class="font-bold text-green-800 text-sm">PREPARATION</span><span class="text-xs text-green-600 bg-white px-2 py-0.5 rounded border border-green-200">Senin 12.00</span></div>
+                            <h4 class="font-bold text-gray-900">NAT Indonesia</h4>
+                            <p class="text-sm text-gray-600 mt-1">Siapkan materi interview online (Coretax, Negosiasi).</p>
+                        </div>
+                        <div class="p-4 bg-yellow-50 border border-yellow-100 rounded-lg">
+                            <div class="flex justify-between mb-1"><span class="font-bold text-yellow-800 text-sm">CHECK</span><span class="text-xs text-yellow-600 bg-white px-2 py-0.5 rounded border border-yellow-200">Siang</span></div>
+                            <h4 class="font-bold text-gray-900">CRK & Yobel</h4>
+                            <p class="text-sm text-gray-600 mt-1">Cek Spam Folder Email untuk link psikotes otomatis.</p>
                         </div>
                     </div>
                 </div>
@@ -119,6 +126,7 @@
                     <button onclick="filterTable('all')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-blue-600 text-white shadow-sm">Semua</button>
                     <button onclick="filterTable('hot')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700">Hot 🟢</button>
                     <button onclick="filterTable('warm')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700">Warm 🟡</button>
+                    <button onclick="filterTable('passive')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700">Passive ⚪</button>
                     <button onclick="filterTable('closed')" class="filter-btn px-4 py-2 rounded-full text-sm font-medium bg-white text-gray-700">Closed 🔴</button>
                 </div>
             </div>
@@ -144,16 +152,16 @@
     <script>
         const applications = [
             // HOT PROSPECTS (8 Total)
-            { date: "05 Des", company: "NAT Indonesia", position: "FTA Supervisor", contact: "Pak Fenton", status: "🟢 INTERVIEW ONLINE", detail: "Selasa, 10 Des (12.00 WIB)", action: "Persiapan Teknis", group: "hot" },
+            { date: "05 Des", company: "NAT Indonesia", position: "FTA Supervisor", contact: "Pak Fenton", status: "🟢 INTERVIEW ONLINE", detail: "Senin, 8 Des (12.00 WIB)", action: "Persiapan Teknis", group: "hot" },
             { date: "05 Des", company: "SKINTIFIC", position: "Accounting Mgr", contact: "Bu Fathia", status: "💎 SCREENING DONE", detail: "Screening questions dijawab. Menunggu review HR.", action: "Tunggu Respon HR", group: "hot" },
-            { date: "04 Des", company: "Kirim Kirim ID", position: "FAT Manager", contact: "Pak Andrew", status: "💎 FOUNDER DONE", detail: "Interview Offline Selesai (5 Des). Nego Gaji 20jt Nett.", action: "Tunggu Offering", group: "hot" },
+            { date: "04 Des", company: "Kirim Kirim ID", position: "FAT Manager", contact: "Pak Andrew", status: "💎 FOUNDER DONE", detail: "Interview Offline Selesai (5 Des). Nego Gaji 20jt Nett.", action: "Tunggu Info HR", group: "hot" },
             { date: "28 Nov", company: "PT Citarasa Kuliner", position: "Finance Mgr", contact: "Bu Izmi", status: "🟢 HR DONE", detail: "HR Interview Selesai. Next: Psikotes.", action: "Tunggu Jadwal Tes", group: "hot" },
             { date: "27 Nov", company: "PT AQS Group", position: "Finance Mgr", contact: "Bu Maygan", status: "🟢 ON TRACK", detail: "Menunggu feedback klien (Tes Selesai)", action: "Tunggu Info Chat", group: "hot" },
             { date: "25 Nov", company: "ProEd Global", position: "Fin. Controller", contact: "Pak Nyoman", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Online Test", action: "Cek LinkedIn", group: "hot" },
             { date: "14 Nov", company: "PT LinkIT 360", position: "CFO", contact: "Qikan", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Retake Psikotes", action: "Cek WA Berkala", group: "hot" },
             { date: "13 Nov", company: "PT Beeme", position: "FAT Manager", contact: "Pak Ari", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Psikotes", action: "Cek WA Berkala", group: "hot" },
 
-            // WARM FOLLOW-UP (11 Total)
+            // WARM FOLLOW-UP (12 Total)
             { date: "05 Des", company: "PT Yobel Sandang", position: "Posisi TBC", contact: "HR Team", status: "📩 NEGO JADWAL", detail: "Undangan Psikotes Offline. Nego ke Online.", action: "Tunggu Balasan Email", group: "warm" },
             { date: "03 Des", company: "NPCT1", position: "Acc. Executive", contact: "Pak Arbi", status: "💎 VIP REFERRAL", detail: "CV terkirim via WA pribadi", action: "Tunggu Respon Personal", group: "warm" },
             { date: "28 Nov", company: "SML (Semarang)", position: "F&A Manager", contact: "Bu Debby", status: "📩 CHAT TERKIRIM", detail: "Konfirmasi email via LinkedIn (3 Des)", action: "Pantau LinkedIn", group: "warm" },
@@ -201,9 +209,16 @@
         function renderTable(filter = 'all') {
             const tbody = document.getElementById('pipelineTableBody'); tbody.innerHTML = '';
             const filtered = applications.filter(a => filter === 'all' || a.group === filter);
+            const classes = {
+                hot: { pill: 'bg-green-100 text-green-800 border-green-200', dot: 'bg-green-500' },
+                warm: { pill: 'bg-yellow-100 text-yellow-800 border-yellow-200', dot: 'bg-yellow-500' },
+                passive: { pill: 'bg-gray-100 text-gray-600 border-gray-200', dot: 'bg-gray-500' },
+                closed: { pill: 'bg-red-100 text-red-800 border-red-200', dot: 'bg-red-500' }
+            };
+            
             filtered.forEach(app => {
-                let color = app.group==='hot'?'green':app.group==='warm'?'yellow':app.group==='passive'?'gray':'red';
-                let row = `<tr class="hover:bg-gray-50"><td class="px-6 py-4 text-sm text-gray-900 font-medium">${app.date}</td><td class="px-6 py-4"><div class="text-sm font-bold text-gray-900">${app.company}</div><div class="text-xs text-gray-500">${app.position}</div></td><td class="px-6 py-4"><span class="px-2 text-xs font-semibold rounded-full bg-${color}-100 text-${color}-800 border border-${color}-200">${app.status}</span></td><td class="px-6 py-4 text-right"><div class="h-2.5 w-2.5 rounded-full inline-block bg-${color}-500"></div></td></tr>`;
+                const style = classes[app.group];
+                let row = `<tr class="hover:bg-gray-50"><td class="px-6 py-4 text-sm text-gray-900 font-medium">${app.date}</td><td class="px-6 py-4"><div class="text-sm font-bold text-gray-900">${app.company}</div><div class="text-xs text-gray-500">${app.position}</div></td><td class="px-6 py-4"><span class="px-2 text-xs font-semibold rounded-full border ${style.pill}">${app.status}</span><div class="text-xs text-gray-500 mt-1">${app.detail}</div></td><td class="px-6 py-4 text-sm text-gray-600"><span class="mr-2">👉</span>${app.action}</td><td class="px-6 py-4 text-right"><div class="h-2.5 w-2.5 rounded-full inline-block ${style.dot}"></div></td></tr>`;
                 tbody.insertAdjacentHTML('beforeend', row);
             });
         }
