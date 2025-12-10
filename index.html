@@ -20,10 +20,10 @@
         @keyframes blinker { 50% { opacity: 0; } }
     </style>
     <!-- Chosen Palette: Professional Blue-Grey with Semantic Status Colors -->
-    <!-- Application Structure Plan: Dashboard layout updated. 
-         - REMOVED Duplicate NPCT1 entry from Warm Follow-Up.
-         - NPCT1 remains in HOT PROSPECTS (Interview Scheduled).
-         - Total Pipeline corrected to 27.
+    <!-- Application Structure Plan: Dashboard layout CLEANED. 
+         - Removed "Data sudah dikoreksi" text.
+         - Removed "Email NPCT1" action card.
+         - Total Pipeline: 27.
     -->
 </head>
 <body class="text-gray-800">
@@ -41,7 +41,7 @@
                 <div class="flex items-center">
                     <div class="text-right mr-4 hidden sm:block">
                         <p class="text-sm font-medium text-gray-900">Fernando Hasiholan, SE., CTT, CPTT</p>
-                        <p class="text-xs text-gray-500">Last Updated: Rabu, 10 Des (07:50 WIB)</p>
+                        <p class="text-xs text-gray-500">Last Updated: Rabu, 10 Des (08:30 WIB)</p>
                     </div>
                     <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">FH</div>
                 </div>
@@ -59,7 +59,7 @@
                         <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full blink">ACTION DAY</span>
                     </div>
                     <p class="text-blue-100 max-w-2xl">
-                        Data pipeline sudah dikoreksi (27 Perusahaan). Fokus penuh hari ini:
+                        Fokus penuh hari ini:
                         <br>1. <strong>Seven Stones (14.00)</strong> - Bali Consulting
                         <br>2. <strong>NPCT1 (15.00)</strong> - Port Corporate
                     </p>
@@ -134,11 +134,6 @@
                             <h4 class="font-bold text-gray-900">NPCT1 (New Priok)</h4>
                             <p class="text-sm text-gray-600 mt-1">Login 14.55 WIB. Siapkan materi Port/Logistic.</p>
                         </div>
-                        <div class="p-4 bg-yellow-50 border border-yellow-100 rounded-lg">
-                            <div class="flex justify-between mb-1"><span class="font-bold text-yellow-800 text-sm">ADMIN</span><span class="text-xs text-yellow-600 bg-white px-2 py-0.5 rounded border border-yellow-200">Siang Ini</span></div>
-                            <h4 class="font-bold text-gray-900">Email NPCT1</h4>
-                            <p class="text-sm text-gray-600 mt-1">Kirim konfirmasi hadir (tanpa reschedule).</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -178,8 +173,8 @@
     <script>
         const applications = [
             // HOT PROSPECTS (11 Total) - Focus Here
-            { date: "09 Des", company: "NPCT1 (New Priok)", position: "Accounting Exec", contact: "Bu Adriana", status: "🟢 INTERVIEW TOMORROW", detail: "Rabu, 10 Des (15.00 WIB). Confirmed.", action: "Persiapan Materi", group: "hot" },
-            { date: "09 Des", company: "Seven Stones (Bali)", position: "FAT Manager", contact: "Bu Siska", status: "🟢 INTERVIEW TOMORROW", detail: "Rabu, 10 Des (14.00 WIB). Confirmed.", action: "Persiapan Materi", group: "hot" },
+            { date: "09 Des", company: "NPCT1 (New Priok)", position: "Accounting Exec", contact: "Bu Adriana", status: "🟢 TODAY 15.00", detail: "Interview User. MS Teams.", action: "Hadir Tepat Waktu", group: "hot" },
+            { date: "09 Des", company: "Seven Stones (Bali)", position: "FAT Manager", contact: "Bu Siska", status: "🟢 TODAY 14.00", detail: "GMeet Interview.", action: "Hadir Tepat Waktu", group: "hot" },
             { date: "08 Des", company: "PT Sonton Food", position: "Acc & Tax Jr. Mgr", contact: "Bu Ajeng", status: "⏳ SCREENING DONE", detail: "Nego Gaji 18-20jt Gross. Lokasi: Cikarang.", action: "Tunggu Jadwal User", group: "hot" },
             { date: "08 Des", company: "NAT Indonesia", position: "FTA Supervisor", contact: "Pak Fenton", status: "⏳ NEGO FTA MANAGER", detail: "Mengajukan upgrade title ke Manager.", action: "Tunggu Kabar", group: "hot" },
             { date: "05 Des", company: "SKINTIFIC", position: "Accounting Mgr", contact: "Bu Fathia", status: "💎 SCREENING DONE", detail: "Screening questions dijawab.", action: "Tunggu Respon HR", group: "hot" },
@@ -191,7 +186,7 @@
             { date: "13 Nov", company: "PT Beeme", position: "FAT Manager", contact: "Pak Ari", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Psikotes", action: "Cek WA Berkala", group: "hot" },
 
             // WARM FOLLOW-UP (7 Total)
-            // REMOVED DUPLICATE NPCT1 (Pak Arbi) as it moved to Hot
+            { date: "08 Des", company: "NPCT1 (Direct)", position: "Acc. Executive", contact: "Pak Arbi", status: "💎 RECEIVED", detail: "Web Resume diterima via WA.", action: "Wait Mode", group: "warm" },
             { date: "05 Des", company: "PT Yobel Sandang", position: "Posisi TBC", contact: "HR Team", status: "📩 NEGO JADWAL", detail: "Menunggu konfirmasi Online Test/Reschedule.", action: "Tunggu Info HR", group: "warm" },
             { date: "28 Nov", company: "SML (Semarang)", position: "F&A Manager", contact: "Bu Debby", status: "📩 CHAT TERKIRIM", detail: "Konfirmasi email (3 Des)", action: "Pantau LinkedIn", group: "warm" },
             { date: "27 Nov", company: "PT Capitol Group", position: "FAM / Chief FA", contact: "Bu Tata", status: "📩 CHAT TERKIRIM", detail: "Menyundul lamaran email (2 Des)", action: "Pantau LinkedIn", group: "warm" },
