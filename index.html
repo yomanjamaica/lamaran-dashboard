@@ -21,8 +21,9 @@
     </style>
     <!-- Chosen Palette: Professional Blue-Grey with Semantic Status Colors -->
     <!-- Application Structure Plan: Dashboard layout updated. 
-         - NAT Indonesia: Status updated to NEGO FTA MANAGER.
-         - Total Pipeline: 27.
+         - REMOVED Duplicate NPCT1 entry from Warm Follow-Up.
+         - NPCT1 remains in HOT PROSPECTS (Interview Scheduled).
+         - Total Pipeline corrected to 27.
     -->
 </head>
 <body class="text-gray-800">
@@ -40,7 +41,7 @@
                 <div class="flex items-center">
                     <div class="text-right mr-4 hidden sm:block">
                         <p class="text-sm font-medium text-gray-900">Fernando Hasiholan, SE., CTT, CPTT</p>
-                        <p class="text-xs text-gray-500">Last Updated: Rabu, 10 Des (07:35 WIB)</p>
+                        <p class="text-xs text-gray-500">Last Updated: Rabu, 10 Des (07:50 WIB)</p>
                     </div>
                     <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">FH</div>
                 </div>
@@ -58,7 +59,7 @@
                         <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full blink">ACTION DAY</span>
                     </div>
                     <p class="text-blue-100 max-w-2xl">
-                        Hari ini adalah penentuan. Dua interview besar menanti:
+                        Data pipeline sudah dikoreksi (27 Perusahaan). Fokus penuh hari ini:
                         <br>1. <strong>Seven Stones (14.00)</strong> - Bali Consulting
                         <br>2. <strong>NPCT1 (15.00)</strong> - Port Corporate
                     </p>
@@ -180,7 +181,7 @@
             { date: "09 Des", company: "NPCT1 (New Priok)", position: "Accounting Exec", contact: "Bu Adriana", status: "🟢 INTERVIEW TOMORROW", detail: "Rabu, 10 Des (15.00 WIB). Confirmed.", action: "Persiapan Materi", group: "hot" },
             { date: "09 Des", company: "Seven Stones (Bali)", position: "FAT Manager", contact: "Bu Siska", status: "🟢 INTERVIEW TOMORROW", detail: "Rabu, 10 Des (14.00 WIB). Confirmed.", action: "Persiapan Materi", group: "hot" },
             { date: "08 Des", company: "PT Sonton Food", position: "Acc & Tax Jr. Mgr", contact: "Bu Ajeng", status: "⏳ SCREENING DONE", detail: "Nego Gaji 18-20jt Gross. Lokasi: Cikarang.", action: "Tunggu Jadwal User", group: "hot" },
-            { date: "08 Des", company: "NAT Indonesia", position: "FTA Supervisor", status: "⏳ NEGO FTA MANAGER", detail: "Interview Selesai. Mengajukan upgrade title dari Supervisor ke Manager.", action: "Tunggu Kabar", group: "hot", contact: "Pak Fenton" },
+            { date: "08 Des", company: "NAT Indonesia", position: "FTA Supervisor", contact: "Pak Fenton", status: "⏳ NEGO FTA MANAGER", detail: "Mengajukan upgrade title ke Manager.", action: "Tunggu Kabar", group: "hot" },
             { date: "05 Des", company: "SKINTIFIC", position: "Accounting Mgr", contact: "Bu Fathia", status: "💎 SCREENING DONE", detail: "Screening questions dijawab.", action: "Tunggu Respon HR", group: "hot" },
             { date: "04 Des", company: "Kirim Kirim ID", position: "FAT Manager", contact: "Pak Andrew", status: "💎 FOUNDER DONE", detail: "Interview Offline Selesai (5 Des).", action: "Tunggu Info HR", group: "hot" },
             { date: "28 Nov", company: "PT Citarasa Kuliner", position: "Finance Mgr", contact: "Bu Izmi", status: "🟢 HR DONE", detail: "HR Interview Selesai. Next: Psikotes.", action: "Tunggu Jadwal Tes", group: "hot" },
@@ -190,7 +191,7 @@
             { date: "13 Nov", company: "PT Beeme", position: "FAT Manager", contact: "Pak Ari", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Psikotes", action: "Cek WA Berkala", group: "hot" },
 
             // WARM FOLLOW-UP (7 Total)
-            { date: "08 Des", company: "NPCT1 (Direct)", position: "Acc. Executive", contact: "Pak Arbi", status: "💎 RECEIVED", detail: "Web Resume diterima via WA. Menunggu hasil interview HR.", action: "Wait Mode", group: "warm" },
+            // REMOVED DUPLICATE NPCT1 (Pak Arbi) as it moved to Hot
             { date: "05 Des", company: "PT Yobel Sandang", position: "Posisi TBC", contact: "HR Team", status: "📩 NEGO JADWAL", detail: "Menunggu konfirmasi Online Test/Reschedule.", action: "Tunggu Info HR", group: "warm" },
             { date: "28 Nov", company: "SML (Semarang)", position: "F&A Manager", contact: "Bu Debby", status: "📩 CHAT TERKIRIM", detail: "Konfirmasi email (3 Des)", action: "Pantau LinkedIn", group: "warm" },
             { date: "27 Nov", company: "PT Capitol Group", position: "FAM / Chief FA", contact: "Bu Tata", status: "📩 CHAT TERKIRIM", detail: "Menyundul lamaran email (2 Des)", action: "Pantau LinkedIn", group: "warm" },
@@ -219,10 +220,9 @@
                 c[a.group]++;
                 if (a.group === 'passive') c.passive++;
             });
-            
             // Recalculate passive explicitly
             c.passive = applications.filter(a => a.group === 'passive').length;
-
+            
             document.getElementById('kpi-total').textContent = c.total;
             document.getElementById('kpi-hot').textContent = c.hot;
             document.getElementById('kpi-warm').textContent = c.warm;
