@@ -21,12 +21,10 @@
         .priority-row { background-color: #f0fdf4; border-left: 4px solid #22c55e; }
     </style>
     <!-- Chosen Palette: Professional Blue-Grey with Semantic Status Colors -->
-    <!-- Application Structure Plan: Dashboard layout CLEANED v28. 
-         - REMOVED Duplicate NPCT1 (Warm).
-         - REMOVED Duplicate LinkIT (Hot - Old).
-         - REMOVED Duplicate Beeme (Hot - Rejected).
+    <!-- Application Structure Plan: Dashboard updated v32. 
+         - Skintific: INTERVIEW HR DONE.
+         - CLEANUP: Removed Duplicate NPCT1 (Direct).
          - Total Pipeline Verified: 27 Unique Entries.
-         - Banner Text Retained.
     -->
 </head>
 <body class="text-gray-800">
@@ -44,7 +42,7 @@
                 <div class="flex items-center">
                     <div class="text-right mr-4 hidden sm:block">
                         <p class="text-sm font-medium text-gray-900">Fernando Hasiholan, SE., CTT, CPTT</p>
-                        <p class="text-xs text-gray-500">Last Updated: Jumat, 12 Des (14:35 WIB)</p>
+                        <p class="text-xs text-gray-500">Last Updated: Senin, 15 Des (11:00 WIB)</p>
                     </div>
                     <div class="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold">FH</div>
                 </div>
@@ -58,16 +56,14 @@
             <div class="bg-blue-900 rounded-2xl p-6 text-white shadow-lg relative overflow-hidden">
                 <div class="relative z-10">
                     <div class="flex items-center gap-3 mb-2">
-                        <h1 class="text-2xl font-bold">Super Monday Ahead! 🚀</h1>
-                        <span class="bg-green-400 text-white text-xs px-2 py-1 rounded-full blink">CONFIRMED</span>
+                        <h1 class="text-2xl font-bold">Interview Selesai! ✅</h1>
+                        <span class="bg-green-400 text-white text-xs px-2 py-1 rounded-full blink">PROGRESS</span>
                     </div>
-                    <div class="text-blue-100 max-w-2xl">
-                        <p class="font-bold mb-1">Agenda Senin (15 Des):</p>
-                        <ol class="list-decimal list-inside">
-                            <li><strong>Seven Stones (08.30)</strong> - Interview COO</li>
-                            <li><strong>Skintific (10.00)</strong> - Interview HR</li>
-                        </ol>
-                    </div>
+                    <p class="text-blue-100 max-w-2xl">
+                        <strong>Skintific:</strong> Interview HR tuntas. Menunggu jadwal User.
+                        <strong>Seven Stones:</strong> Menunggu kiriman Case Study.
+                        Total Pipeline Akurat: <strong>27 Perusahaan</strong>.
+                    </p>
                 </div>
                 <div class="absolute right-0 top-0 h-full w-1/3 bg-gradient-to-l from-blue-800 to-transparent opacity-50"></div>
             </div>
@@ -80,7 +76,7 @@
                         <div><p class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Total Pipeline</p><h3 class="text-2xl font-bold text-gray-900 mt-1" id="kpi-total">0</h3></div>
                         <div class="p-1.5 bg-blue-50 rounded-lg text-blue-600"><span class="text-lg">📊</span></div>
                     </div>
-                    <div class="mt-2 text-[10px] text-gray-500">27 Valid Pipelines</div>
+                    <div class="mt-2 text-[10px] text-gray-500">27 Active & Closed</div>
                 </div>
 
                 <!-- Hot -->
@@ -89,7 +85,7 @@
                         <div><p class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Hot Prospects</p><h3 class="text-2xl font-bold text-green-600 mt-1" id="kpi-hot">0</h3></div>
                         <div class="p-1.5 bg-green-50 rounded-lg text-green-600"><span class="text-lg">🔥</span></div>
                     </div>
-                    <div class="mt-2 text-[10px] text-green-600 font-medium">Interview / Waiting</div>
+                    <div class="mt-2 text-[10px] text-green-600 font-medium">Next Stage / Waiting</div>
                 </div>
 
                 <!-- Warm -->
@@ -98,7 +94,7 @@
                         <div><p class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Warm Follow-Up</p><h3 class="text-2xl font-bold text-yellow-600 mt-1" id="kpi-warm">0</h3></div>
                         <div class="p-1.5 bg-yellow-50 rounded-lg text-yellow-600"><span class="text-lg">📩</span></div>
                     </div>
-                    <div class="mt-2 text-[10px] text-yellow-600 font-medium">Follow-Up Done</div>
+                    <div class="mt-2 text-[10px] text-yellow-600 font-medium">Waiting Response</div>
                 </div>
 
                 <!-- Passive -->
@@ -116,7 +112,7 @@
                         <div><p class="text-[10px] font-bold text-gray-500 uppercase tracking-wide">Closed/Hold</p><h3 class="text-2xl font-bold text-red-600 mt-1" id="kpi-closed">0</h3></div>
                         <div class="p-1.5 bg-red-50 rounded-lg text-red-600"><span class="text-lg">🛑</span></div>
                     </div>
-                    <div class="mt-2 text-[10px] text-red-600 font-medium">Beeme, MDI, Hana...</div>
+                    <div class="mt-2 text-[10px] text-red-600 font-medium">Beeme, MDI, Hana, CEVA</div>
                 </div>
             </div>
 
@@ -127,22 +123,22 @@
                     <div class="chart-container"><canvas id="pipelineChart"></canvas></div>
                 </div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">Strategi Jumat</h3>
+                    <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center">Action Plan: Monday</h3>
                     <div class="space-y-4">
                         <div class="p-4 bg-green-50 border border-green-100 rounded-lg">
-                            <div class="flex justify-between mb-1"><span class="font-bold text-green-800 text-sm">PREP</span><span class="text-xs text-green-600 bg-white px-2 py-0.5 rounded border border-green-200">Weekend</span></div>
-                            <h4 class="font-bold text-gray-900">Persiapan Senin</h4>
-                            <p class="text-sm text-gray-600 mt-1">Siapkan materi untuk Seven Stones (COO) & Skintific (HR).</p>
+                            <div class="flex justify-between mb-1"><span class="font-bold text-green-800 text-sm">DONE</span><span class="text-xs text-green-600 bg-white px-2 py-0.5 rounded border border-green-200">10.00 WIB</span></div>
+                            <h4 class="font-bold text-gray-900">Skintific Interview</h4>
+                            <p class="text-sm text-gray-600 mt-1">Interview HR Selesai. Istirahat sejenak.</p>
                         </div>
                         <div class="p-4 bg-yellow-50 border border-yellow-100 rounded-lg">
-                            <div class="flex justify-between mb-1"><span class="font-bold text-yellow-800 text-sm">MONITORING</span><span class="text-xs text-yellow-600 bg-white px-2 py-0.5 rounded border border-yellow-200">Sore Ini</span></div>
-                            <h4 class="font-bold text-gray-900">Kirim Kirim ID</h4>
-                            <p class="text-sm text-gray-600 mt-1">Cek ke Mba Dina sore nanti jika belum ada update.</p>
+                            <div class="flex justify-between mb-1"><span class="font-bold text-yellow-800 text-sm">MONITORING</span><span class="text-xs text-yellow-600 bg-white px-2 py-0.5 rounded border border-yellow-200">Sore/Besok</span></div>
+                            <h4 class="font-bold text-gray-900">Seven Stones</h4>
+                            <p class="text-sm text-gray-600 mt-1">Cek inbox untuk materi Case Study.</p>
                         </div>
                         <div class="p-4 bg-blue-50 border border-blue-100 rounded-lg">
-                            <div class="flex justify-between mb-1"><span class="font-bold text-blue-800 text-sm">WAIT MODE</span><span class="text-xs text-blue-600 bg-white px-2 py-0.5 rounded border border-blue-200">NPCT1</span></div>
-                            <h4 class="font-bold text-gray-900">Menunggu Hasil</h4>
-                            <p class="text-sm text-gray-600 mt-1">Monitoring hasil interview Rabu lalu.</p>
+                            <div class="flex justify-between mb-1"><span class="font-bold text-blue-800 text-sm">WAITING</span><span class="text-xs text-blue-600 bg-white px-2 py-0.5 rounded border border-blue-200">Minggu Ini</span></div>
+                            <h4 class="font-bold text-gray-900">NPCT1</h4>
+                            <p class="text-sm text-gray-600 mt-1">Menunggu hasil interview Rabu lalu.</p>
                         </div>
                     </div>
                 </div>
@@ -182,20 +178,19 @@
 
     <script>
         const applications = [
-            // HOT PROSPECTS (10 Total) - CLEANED
-            { date: "12 Des", company: "Seven Stones (Bali)", position: "FAT Manager", contact: "Bu Siska", status: "🟢 INTERVIEW COO", detail: "Senin, 15 Des (08.30 WIB). Online.", action: "Siapkan Visi", group: "hot" },
-            { date: "12 Des", company: "SKINTIFIC", position: "Accounting Mgr", contact: "Bu Fathia", status: "🟢 INTERVIEW HR", detail: "Senin, 15 Des (10.00 WIB). Online.", action: "Siapkan Materi", group: "hot" },
+            // HOT PROSPECTS (10 Total) - Focus Here
+            { date: "15 Des", company: "Seven Stones (Bali)", position: "FAT Manager", contact: "Bu Siska", status: "📝 CASE STUDY", detail: "Lolos Interview COO. Menunggu materi tes tertulis.", action: "Cek Email", group: "hot" },
+            { date: "15 Des", company: "SKINTIFIC", position: "Accounting Mgr", contact: "Bu Fathia", status: "⏳ INTERVIEW HR DONE", detail: "Interview HR Selesai (10.00). Menunggu User.", action: "Tunggu Kabar", group: "hot" },
+            { date: "10 Des", company: "NPCT1 (New Priok)", position: "Accounting Exec", contact: "Bu Adriana", status: "⏳ WAITING RESULT", detail: "Interview User Selesai (10 Des). Nego 15jt.", action: "Tunggu Hasil", group: "hot" },
             { date: "11 Des", company: "Kirim Kirim ID", position: "FAT Manager", contact: "Dina", status: "⏳ WAITING FEEDBACK", detail: "Menunggu keputusan final Founder.", action: "Standby", group: "hot" },
             { date: "11 Des", company: "PT Citarasa Kuliner", position: "Finance Mgr", contact: "Bu Izmi", status: "📩 WA SENT", detail: "Menanyakan link psikotes yang belum dikirim.", action: "Tunggu Respon", group: "hot" },
             { date: "11 Des", company: "PT AQS Group", position: "Finance Mgr", contact: "Bu Maygan", status: "📩 WA SENT", detail: "Menanyakan feedback klien.", action: "Tunggu Info Chat", group: "hot" },
             { date: "11 Des", company: "PT LinkIT 360", position: "CFO", contact: "Qikan", status: "📩 WA SENT", detail: "Menanyakan hasil Retake Psikotes.", action: "Tunggu Respon", group: "hot" },
-            { date: "10 Des", company: "NPCT1 (New Priok)", position: "Accounting Exec", contact: "Bu Adriana", status: "⏳ WAITING RESULT", detail: "Interview User Selesai. Nego 15jt.", action: "Tunggu Hasil", group: "hot" },
             { date: "08 Des", company: "PT Sonton Food", position: "Acc & Tax Jr. Mgr", contact: "Bu Ajeng", status: "⏳ SCREENING DONE", detail: "Nego Gaji 18-20jt Gross. Menunggu User.", action: "Tunggu Jadwal", group: "hot" },
             { date: "08 Des", company: "NAT Indonesia", position: "FTA Supervisor", contact: "Pak Fenton", status: "⏳ NEGO FTA MANAGER", detail: "Mengajukan upgrade title. Menunggu User.", action: "Tunggu Jadwal", group: "hot" },
             { date: "25 Nov", company: "ProEd Global", position: "Fin. Controller", contact: "Pak Nyoman", status: "⏳ WAITING RESULT", detail: "Menunggu hasil Online Test", action: "Cek LinkedIn", group: "hot" },
             
             // WARM FOLLOW-UP (7 Total)
-            // REMOVED DUPLICATE NPCT1
             { date: "05 Des", company: "PT Yobel Sandang", position: "Posisi TBC", contact: "HR Team", status: "📩 NEGO JADWAL", detail: "Menunggu konfirmasi Online Test/Reschedule.", action: "Tunggu Info HR", group: "warm" },
             { date: "28 Nov", company: "SML (Semarang)", position: "F&A Manager", contact: "Bu Debby", status: "📩 CHAT TERKIRIM", detail: "Konfirmasi email (3 Des)", action: "Pantau LinkedIn", group: "warm" },
             { date: "27 Nov", company: "PT Capitol Group", position: "FAM / Chief FA", contact: "Bu Tata", status: "📩 CHAT TERKIRIM", detail: "Menyundul lamaran email", action: "Pantau LinkedIn", group: "warm" },
@@ -258,7 +253,7 @@
             
             filtered.forEach(app => {
                 const style = classes[app.group];
-                let row = `<tr class="hover:bg-gray-50 ${app.company.includes('NPCT1') ? 'priority-row' : ''}"><td class="px-6 py-4 text-sm text-gray-900 font-medium">${app.date}</td><td class="px-6 py-4"><div class="text-sm font-bold text-gray-900">${app.company} ${app.company.includes('NPCT1') ? '⭐' : ''}</div><div class="text-xs text-gray-500">${app.position}</div></td><td class="px-6 py-4"><span class="px-2 text-xs font-semibold rounded-full border ${style.pill}">${app.status}</span><div class="text-xs text-gray-500 mt-1">${app.detail}</div></td><td class="px-6 py-4 text-sm text-gray-600"><span class="mr-2">👉</span>${app.action}</td><td class="px-6 py-4 text-right"><div class="h-2.5 w-2.5 rounded-full inline-block ${style.dot}"></div></td></tr>`;
+                let row = `<tr class="hover:bg-gray-50"><td class="px-6 py-4 text-sm text-gray-900 font-medium">${app.date}</td><td class="px-6 py-4"><div class="text-sm font-bold text-gray-900">${app.company}</div><div class="text-xs text-gray-500">${app.position}</div></td><td class="px-6 py-4"><span class="px-2 text-xs font-semibold rounded-full border ${style.pill}">${app.status}</span><div class="text-xs text-gray-500 mt-1">${app.detail}</div></td><td class="px-6 py-4 text-sm text-gray-600"><span class="mr-2">👉</span>${app.action}</td><td class="px-6 py-4 text-right"><div class="h-2.5 w-2.5 rounded-full inline-block ${style.dot}"></div></td></tr>`;
                 tbody.insertAdjacentHTML('beforeend', row);
             });
         }
