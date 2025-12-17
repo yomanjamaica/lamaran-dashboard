@@ -6,391 +6,281 @@
     <title>Dashboard Monitoring Lamaran Kerja - Fernando Hasiholan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Slate-50: Warm neutral background */
-            color: #1e293b; /* Slate-800: High contrast text */
-        }
-
-        /* Custom Scrollbar for Table */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 3px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        /* Chart Container Styling - MANDATORY REQUIREMENT */
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px; /* Max width to prevent excessive stretching */
-            height: 350px;    /* Base height */
-            margin-left: auto;
-            margin-right: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+        body { font-family: 'Inter', sans-serif; background-color: #f0fdf4; color: #1e293b; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; height: 350px; margin: 0 auto; }
+        .status-badge { transition: all 0.2s; }
+        .status-badge:hover { transform: scale(1.05); }
+        .kpi-card { transition: transform 0.2s, box-shadow 0.2s; }
+        .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         
-        @media (max-width: 640px) {
-            .chart-container {
-                height: 250px; /* Adjust height for mobile */
-            }
-        }
-
-        /* Status Pills Animation */
-        .status-badge {
-            transition: all 0.3s ease;
-        }
-        .status-badge:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        /* Card Hover Effects */
-        .kpi-card {
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .kpi-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
+        /* Celebration Animation */
+        @keyframes pop { 0% { transform: scale(0.9); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        .celebrate-card { animation: pop 0.6s ease-out; }
     </style>
-    <!-- Chosen Palette: Corporate Slate & Blue (Professional & Clean) -->
-    <!-- Application Structure Plan: 
-         1. Header: User identity and summary.
-         2. Executive Summary (KPIs): Instant view of the most critical numbers (Offer, Hot, Total).
-         3. Visual Analytics: Doughnut chart for status distribution to understand pipeline health.
-         4. Action Center: Filterable and searchable data table containing all 27 applications with status indicators.
-         This structure allows for both high-level strategic review and detailed tracking. -->
-    <!-- Visualization & Content Choices:
-         - KPIs: Simple numeric display for quick impact.
-         - Doughnut Chart: Best for showing part-to-whole relationships (Status breakdown).
-         - Table: Best for detailed textual data (Company, Position, Notes).
-         - CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- 
+    Application Structure Plan: Dashboard updated v29.
+    - Seven Stones: OFFER FINALIZED (Date & Clause Revised).
+    - Added Financial Impact Card (40.45% Increase).
+    - Pipeline Count: 28 Verified.
+    -->
 </head>
 <body class="antialiased">
 
-    <!-- Main Container -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         <!-- Header -->
-        <header class="mb-8 border-b border-slate-200 pb-6">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center">
-                <div>
-                    <h1 class="text-3xl font-bold text-slate-900">Dashboard Lamaran Kerja</h1>
-                    <p class="text-slate-500 mt-1">Fernando Hasiholan, SE., CTT, CPTT</p>
+        <header class="mb-8 border-b border-slate-200 pb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-3xl font-bold text-slate-900">Dashboard Kemenangan</h1>
+                <p class="text-slate-500 mt-1">Fernando Hasiholan, SE., CTT, CPTT</p>
+            </div>
+            <div class="text-right">
+                <div class="inline-flex items-center px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-sm font-bold border border-emerald-200 celebrate-card">
+                    <span class="mr-2 text-lg">✅</span> Status: CONTRACT READY
                 </div>
-                <div class="mt-4 md:mt-0 text-right">
-                    <div class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-green-800 text-sm font-medium">
-                        <span class="mr-2">●</span> Status: OFFER ACCEPTED
-                    </div>
-                    <p class="text-xs text-slate-400 mt-1">Last Updated: 16 Des 2025</p>
-                </div>
+                <p class="text-xs text-slate-400 mt-2">Pipeline: 28 Perusahaan</p>
             </div>
         </header>
 
-        <!-- KPI Section -->
-        <!-- Introduction: This section provides a high-level overview of your job search performance. It highlights the most critical metric: your accepted offer, followed by active opportunities and total volume. -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            <!-- Card 1: Offer -->
-            <div class="kpi-card bg-white p-6 rounded-xl border-l-4 border-emerald-500 shadow-sm">
-                <div class="flex justify-between items-center">
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <!-- Win Card -->
+            <div class="kpi-card bg-gradient-to-br from-emerald-500 to-teal-600 p-5 rounded-xl text-white shadow-lg">
+                <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Offer Accepted</p>
-                        <p class="text-3xl font-bold text-slate-900 mt-1" id="kpi-offer">0</p>
+                        <p class="text-xs font-bold text-emerald-100 uppercase">Offer Finalized</p>
+                        <h3 class="text-3xl font-bold mt-1">Seven Stones</h3>
                     </div>
-                    <div class="text-2xl">🏆</div>
+                    <span class="text-3xl">🌴</span>
                 </div>
-                <p class="text-xs text-emerald-600 mt-2 font-medium">Seven Stones Indonesia</p>
+                <p class="text-xs text-emerald-100 mt-3 font-medium">Revisi Disetujui: Jan 26 & Indemnity</p>
             </div>
 
-            <!-- Card 2: Hot/Active -->
-            <div class="kpi-card bg-white p-6 rounded-xl border-l-4 border-blue-500 shadow-sm">
-                <div class="flex justify-between items-center">
+            <!-- Financial Impact -->
+            <div class="kpi-card bg-white p-5 rounded-xl border-l-4 border-blue-500 shadow-sm">
+                <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Hot Prospects</p>
-                        <p class="text-3xl font-bold text-slate-900 mt-1" id="kpi-hot">0</p>
+                        <p class="text-xs font-bold text-slate-500 uppercase">Salary Increase</p>
+                        <h3 class="text-2xl font-bold text-blue-600 mt-1">+40.45%</h3>
                     </div>
-                    <div class="text-2xl">🔥</div>
+                    <span class="text-2xl">📈</span>
                 </div>
-                <p class="text-xs text-blue-600 mt-2 font-medium">Interview / Waiting Result</p>
+                <p class="text-xs text-slate-500 mt-2">Rp 10.6M ➔ Rp 15.0M (Net)</p>
             </div>
 
-            <!-- Card 3: Total Pipeline -->
-            <div class="kpi-card bg-white p-6 rounded-xl border-l-4 border-slate-400 shadow-sm">
-                <div class="flex justify-between items-center">
+            <!-- Hot Prospects -->
+            <div class="kpi-card bg-white p-5 rounded-xl border-l-4 border-amber-400 shadow-sm">
+                <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Total Pipeline</p>
-                        <p class="text-3xl font-bold text-slate-900 mt-1" id="kpi-total">0</p>
+                        <p class="text-xs font-bold text-slate-500 uppercase">Hot Prospects</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1" id="kpi-hot">0</h3>
                     </div>
-                    <div class="text-2xl">📊</div>
+                    <span class="text-2xl">🔥</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-2 font-medium">27 Perusahaan Terverifikasi</p>
+                <p class="text-xs text-amber-600 mt-2">NPCT1, Yamaha, Skintific</p>
             </div>
 
-            <!-- Card 4: Rejected/Closed -->
-            <div class="kpi-card bg-white p-6 rounded-xl border-l-4 border-rose-500 shadow-sm">
-                <div class="flex justify-between items-center">
+            <!-- Total Pipeline -->
+            <div class="kpi-card bg-white p-5 rounded-xl border-l-4 border-slate-400 shadow-sm">
+                <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-sm font-medium text-slate-500 uppercase tracking-wider">Closed</p>
-                        <p class="text-3xl font-bold text-slate-900 mt-1" id="kpi-closed">0</p>
+                        <p class="text-xs font-bold text-slate-500 uppercase">Total Pipeline</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1" id="kpi-total">0</h3>
                     </div>
-                    <div class="text-2xl">🛑</div>
+                    <span class="text-2xl">📊</span>
                 </div>
-                <p class="text-xs text-rose-600 mt-2 font-medium">Rejected / On Hold</p>
+                <p class="text-xs text-slate-500 mt-2">28 Active & Closed</p>
             </div>
-        </section>
+        </div>
 
-        <!-- Analytics & Content Grid -->
+        <!-- Main Content Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            <!-- Visualization Column -->
-            <!-- Context: Visual representation of your application statuses. Helps to quickly see the ratio of active vs. passive/closed applications. -->
-            <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h3 class="text-lg font-bold text-slate-800 mb-4">Distribusi Status Lamaran</h3>
+            <!-- Chart Section -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-800 mb-6">Analisis Pipeline (28 Total)</h3>
                 <div class="chart-container">
                     <canvas id="pipelineChart"></canvas>
                 </div>
-                <div class="mt-6 space-y-3">
-                    <div class="text-sm text-slate-600 border-l-2 border-emerald-500 pl-3">
-                        <strong>Strategy Note:</strong> Fokus utama saat ini adalah proses onboarding Seven Stones, sambil memantau hasil akhir NPCT1 dan Skintific sebagai cadangan strategis.
-                    </div>
+                <div class="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
+                    <h4 class="text-sm font-bold text-emerald-800 mb-2">Victory Note:</h4>
+                    <p class="text-xs text-emerald-700">
+                        Negosiasi berhasil! Seven Stones menyetujui tanggal masuk <strong>26 Jan 2026</strong> dan menambahkan klausul perlindungan hukum. Ini adalah kesepakatan yang sangat aman untuk ditandatangani.
+                    </p>
                 </div>
             </div>
 
-            <!-- Data Table Column -->
-            <!-- Context: This is the detailed database of all 27 applications. Use the search bar to find specific companies or the tabs to filter by status category. -->
+            <!-- Data Table Section -->
             <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 flex flex-col h-[600px]">
-                
-                <!-- Toolbar -->
-                <div class="p-5 border-b border-slate-100 bg-slate-50 rounded-t-xl flex flex-col sm:flex-row justify-between gap-4">
-                    <div class="flex space-x-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
-                        <button onclick="filterData('all')" class="filter-btn px-4 py-2 text-sm font-medium rounded-lg bg-blue-600 text-white shadow-sm transition-colors hover:bg-blue-700 ring-2 ring-offset-1 ring-blue-600" data-filter="all">All</button>
-                        <button onclick="filterData('active')" class="filter-btn px-4 py-2 text-sm font-medium rounded-lg bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors" data-filter="active">Active</button>
-                        <button onclick="filterData('passive')" class="filter-btn px-4 py-2 text-sm font-medium rounded-lg bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors" data-filter="passive">Passive</button>
-                        <button onclick="filterData('closed')" class="filter-btn px-4 py-2 text-sm font-medium rounded-lg bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 transition-colors" data-filter="closed">Closed</button>
-                    </div>
-                    <div class="relative">
-                        <input type="text" id="searchInput" placeholder="Cari perusahaan..." class="w-full sm:w-64 pl-10 pr-4 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <div class="absolute left-3 top-2.5 text-slate-400">🔍</div>
-                    </div>
+                <!-- Filter Tabs -->
+                <div class="p-4 border-b border-slate-100 bg-slate-50 rounded-t-xl flex gap-2 overflow-x-auto">
+                    <button onclick="filterData('all')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white shadow-sm" data-filter="all">All</button>
+                    <button onclick="filterData('active')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-md bg-white text-slate-600 border hover:bg-slate-50" data-filter="active">Active</button>
+                    <button onclick="filterData('closed')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-md bg-white text-slate-600 border hover:bg-slate-50" data-filter="closed">Closed</button>
                 </div>
 
                 <!-- Table -->
-                <div class="overflow-y-auto custom-scrollbar flex-grow p-0">
+                <div class="overflow-y-auto custom-scrollbar flex-grow">
                     <table class="w-full text-left border-collapse">
-                        <thead class="bg-slate-50 sticky top-0 z-10 shadow-sm">
+                        <thead class="bg-slate-50 sticky top-0 z-10">
                             <tr>
-                                <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider w-1/4">Perusahaan & Posisi</th>
-                                <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider w-1/4">Status</th>
-                                <th class="px-6 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider w-1/2">Catatan Terkini</th>
+                                <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase">Perusahaan</th>
+                                <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase">Posisi</th>
+                                <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase">Status & Note</th>
                             </tr>
                         </thead>
-                        <tbody id="tableBody" class="divide-y divide-slate-100">
-                            <!-- Rows will be populated by JS -->
+                        <tbody id="tableBody" class="divide-y divide-slate-100 text-sm">
+                            <!-- JS Populated -->
                         </tbody>
                     </table>
-                    <div id="noResults" class="hidden p-8 text-center text-slate-500">
-                        Tidak ada data lamaran yang ditemukan.
-                    </div>
-                </div>
-                
-                <!-- Footer -->
-                <div class="p-4 border-t border-slate-100 bg-slate-50 rounded-b-xl text-xs text-slate-500 flex justify-between">
-                    <span>Total Data: <span id="displayCount">0</span></span>
-                    <span>100% Verified Data</span>
                 </div>
             </div>
         </div>
+
     </div>
 
-    <!-- JavaScript Logic -->
     <script>
-        // --- DATA SOURCE (27 Companies) ---
+        // --- DATA SOURCE (28 Companies) ---
         const applications = [
-            // 1. OFFER ACCEPTED
-            { id: 1, company: "Seven Stones Indonesia", position: "FAT Manager", status: "Offer Accepted", category: "active", color: "emerald", note: "Menunggu Revisi Tanggal Join (26 Jan 2026). Nego 15jt Net." },
+            // 1. OFFER FINALIZED
+            { company: "Seven Stones Indonesia", position: "FAT Manager", status: "✅ OFFER FINALIZED", category: "active", color: "emerald", note: "Revisi Diterima. Start Date 26 Jan 2026. Siap TTD." },
 
-            // 2-6. HOT PROSPECTS (Interview Stages / Waiting Results)
-            { id: 2, company: "NPCT1 (New Priok)", position: "Accounting Executive", status: "Waiting Result", category: "active", color: "blue", note: "Interview User Done (10 Des). Belum ada update." },
-            { id: 3, company: "SKINTIFIC", position: "Accounting Manager", status: "Interview HR Done", category: "active", color: "blue", note: "Interview HR Done (15 Des). Menunggu User." },
-            { id: 4, company: "Kirim Kirim ID", position: "FAT Manager", status: "Waiting Feedback", category: "active", color: "blue", note: "Interview Founder Done. Menunggu keputusan." },
-            { id: 5, company: "NAT Indonesia", position: "FTA Supervisor", status: "Interview 1 Done", category: "active", color: "blue", note: "Negosiasi Title Manager diajukan. Menunggu jadwal selanjutnya." },
-            { id: 6, company: "PT Sonton Food", position: "Acc & Tax Jr. Mgr", status: "Screening Done", category: "active", color: "blue", note: "Screening HR Done (8 Des). Menunggu User." },
+            // 2-11. HOT PROSPECTS (10)
+            { company: "PT Yamaha Musik", position: "Asst. Mgr Acc Tax", status: "⏳ Scheduling", category: "active", color: "blue", note: "HR offer via WA. Menunggu Jadwal Interview." },
+            { company: "NPCT1 (New Priok)", position: "Accounting Exec", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Interview User Done. Menunggu hasil." },
+            { company: "SKINTIFIC", position: "Accounting Manager", status: "⏳ Interview HR Done", category: "active", color: "blue", note: "Interview HR Done. Menunggu User." },
+            { company: "Kirim Kirim ID", position: "FAT Manager", status: "⏳ Waiting Feedback", category: "active", color: "blue", note: "Interview Founder Done." },
+            { company: "NAT Indonesia", position: "FTA Supervisor", status: "⏳ Interview 1 Done", category: "active", color: "blue", note: "Nego Title Manager. Menunggu jadwal user." },
+            { company: "PT Sonton Food", position: "Acc & Tax Jr. Mgr", status: "⏳ Screening Done", category: "active", color: "blue", note: "Screening Done. Menunggu User." },
+            { company: "PT Citarasa Kuliner", position: "Finance Manager", status: "⏳ Waiting Test", category: "active", color: "blue", note: "Menunggu Link Psikotes." },
+            { company: "PT AQS Group", position: "Finance Manager", status: "⏳ Waiting Feedback", category: "active", color: "blue", note: "Tes Selesai." },
+            { company: "PT LinkIT 360", position: "CFO", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Retake Psikotes Done." },
+            { company: "ProEd Global", position: "Fin. Controller", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Online Test Done." },
 
-            // 7-11. WAITING TESTS/RESULTS (Active)
-            { id: 7, company: "PT Citarasa Kuliner (CRK)", position: "Finance Manager", status: "Waiting Test", category: "active", color: "amber", note: "HR Interview Done. Menunggu link Psikotes." },
-            { id: 8, company: "PT AQS Group (Apex)", position: "Finance Manager", status: "Waiting Feedback", category: "active", color: "amber", note: "Tes Selesai. Menunggu feedback klien." },
-            { id: 9, company: "PT LinkIT 360", position: "CFO", status: "Waiting Result", category: "active", color: "amber", note: "Retake Psikotes Done. Menunggu hasil." },
-            { id: 10, company: "ProEd Global", position: "Fin. Controller", status: "Waiting Result", category: "active", color: "amber", note: "Online Test Done. Menunggu hasil." },
-            { id: 11, company: "PT Yobel Sandang", position: "Posisi TBC", status: "Nego Jadwal", category: "active", color: "amber", note: "Menunggu konfirmasi tes online/reschedule." },
+            // 12-18. WARM FOLLOW-UP (7)
+            { company: "PT Yobel Sandang", position: "Posisi TBC", status: "📩 Nego Jadwal", category: "active", color: "amber", note: "Nego Offline ke Online." },
+            { company: "SML (Semarang)", position: "F&A Manager", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up LinkedIn." },
+            { company: "PT Capitol Group", position: "FAM / Chief FA", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up LinkedIn." },
+            { company: "Louis Kienne", position: "Chief Accounting", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up LinkedIn." },
+            { company: "Rascal Republic", position: "Group Mgr", status: "⏳ Under Review", category: "active", color: "amber", note: "App with team." },
+            { company: "Lancesoft Indonesia", position: "F&A Manager", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up WA." },
+            { company: "Farrasindo Group", position: "Sr. Mgr Fin", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up WA." },
 
-            // 12-17. WARM FOLLOW-UP (Applied / Contacted)
-            { id: 12, company: "SML (Semarang)", position: "F&A Manager", status: "Applied", category: "active", color: "indigo", note: "Follow-up via LinkedIn (3 Des)." },
-            { id: 13, company: "PT Capitol Group", position: "FAM / Chief FA", status: "Applied", category: "active", color: "indigo", note: "Follow-up via LinkedIn (2 Des)." },
-            { id: 14, company: "Louis Kienne", position: "Chief Accounting", status: "Applied", category: "active", color: "indigo", note: "Follow-up via LinkedIn (3 Des)." },
-            { id: 15, company: "Rascal Republic", position: "Group Mgr", status: "Under Review", category: "active", color: "indigo", note: "Daniel: App is with team for review." },
-            { id: 16, company: "Lancesoft Indonesia", position: "F&A Manager", status: "Applied", category: "active", color: "indigo", note: "Follow-up sent (3 Des)." },
-            { id: 17, company: "Farrasindo Group", position: "Sr. Mgr Fin", status: "Applied", category: "active", color: "indigo", note: "Follow-up sent (10 Des)." },
+            // 19-23. PASSIVE / STALE (5)
+            { company: "Youvit", position: "Jr. Acc Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "Job Reposted." },
+            { company: "Lalamove", position: "Finance Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "No response > 3 weeks." },
+            { company: "Kreston Ind.", position: "Assoc. Tax Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "No news." },
+            { company: "AEON Credit", position: "Tax Section", status: "💤 Passive", category: "passive", color: "slate", note: "Stale > 1 Month." },
+            { company: "Wingstop", position: "F&A", status: "💤 Passive", category: "passive", color: "slate", note: "Stale > 1 Month." },
 
-            // 18-23. PASSIVE / STALE (Long Wait - > 1 Month or No Response)
-            { id: 18, company: "Youvit", position: "Jr. Acc Mgr", status: "Passive", category: "passive", color: "slate", note: "Job Reposted. Consider Closed." },
-            { id: 19, company: "Lalamove", position: "Finance Mgr", status: "Passive", category: "passive", color: "slate", note: "No response > 3 weeks." },
-            { id: 20, company: "Kreston Ind.", position: "Assoc. Tax Mgr", status: "Passive", category: "passive", color: "slate", note: "No news." },
-            { id: 21, company: "Mitsui & Co.", position: "Finance Mgr", status: "Passive", category: "passive", color: "slate", note: "Waiting User (Very Long)." },
-            { id: 22, company: "AEON Credit", position: "Tax Section", status: "Passive", category: "passive", color: "slate", note: "Stale > 1 Month." },
-            { id: 23, company: "Wingstop", position: "F&A", status: "Passive", category: "passive", color: "slate", note: "Stale > 1 Month." },
-
-            // 24-27. CLOSED / HOLD
-            { id: 24, company: "PT Beeme", position: "FAT Manager", status: "Rejected", category: "closed", color: "red", note: "Info HR: Belum dapat melanjutkan." },
-            { id: 25, company: "PT Hana Fashion", position: "Fin/Acc Mgr", status: "On Hold", category: "closed", color: "red", note: "Posisi ditahan." },
-            { id: 26, company: "Marina Dev. (MDI)", position: "Acc & Tax Mgr", status: "Rejected", category: "closed", color: "red", note: "Info via Redy." },
-            { id: 27, company: "CEVA Air Ocean", position: "Tax Spv", status: "On Hold", category: "closed", color: "red", note: "Struktur Organisasi Berubah." }
+            // 24-28. CLOSED (5)
+            { company: "PT Beeme", position: "FAT Manager", status: "🛑 Rejected", category: "closed", color: "rose", note: "Info HR: Tidak lanjut." },
+            { company: "Mitsui & Co.", position: "Finance Mgr", status: "🛑 Rejected", category: "closed", color: "rose", note: "Info HR: Closed." },
+            { company: "PT Hana Fashion", position: "Fin/Acc Mgr", status: "🛑 On Hold", category: "closed", color: "rose", note: "Posisi ditahan." },
+            { company: "Marina Dev. (MDI)", position: "Acc & Tax Mgr", status: "🛑 Rejected", category: "closed", color: "rose", note: "Info via Redy." },
+            { company: "CEVA Air Ocean", position: "Tax Spv", status: "🛑 On Hold", category: "closed", color: "rose", note: "Struktur Organisasi Berubah." }
         ];
 
-        // --- DOM ELEMENTS ---
-        const tableBody = document.getElementById('tableBody');
-        const searchInput = document.getElementById('searchInput');
-        const displayCount = document.getElementById('displayCount');
-        const noResults = document.getElementById('noResults');
+        document.addEventListener('DOMContentLoaded', () => {
+            updateDashboard();
+        });
 
-        // --- FUNCTIONS ---
+        function updateDashboard() {
+            // Update KPIs
+            const offer = applications.filter(a => a.status.includes('FINALIZED')).length;
+            const hot = applications.filter(a => a.category === 'active' && !a.status.includes('FINALIZED') && a.color === 'blue').length;
+            const warm = applications.filter(a => a.category === 'active' && a.color === 'amber').length;
+            const passive = applications.filter(a => a.category === 'passive').length;
+            const closed = applications.filter(a => a.category === 'closed').length;
 
-        // 1. Calculate KPIs
-        function updateKPIs() {
-            const offerCount = applications.filter(a => a.status === 'Offer Accepted').length;
-            const hotCount = applications.filter(a => a.category === 'active' && a.status !== 'Offer Accepted').length;
-            const closedCount = applications.filter(a => a.category === 'closed').length;
+            const kpiOffer = document.getElementById('kpi-offer');
+            if (kpiOffer) kpiOffer.innerText = offer;
+
+            const kpiHot = document.getElementById('kpi-hot');
+            if (kpiHot) kpiHot.innerText = hot;
             
-            document.getElementById('kpi-offer').innerText = offerCount;
-            document.getElementById('kpi-hot').innerText = hotCount;
-            document.getElementById('kpi-total').innerText = applications.length;
-            document.getElementById('kpi-closed').innerText = closedCount;
+            const kpiTotal = document.getElementById('kpi-total');
+            if (kpiTotal) kpiTotal.innerText = applications.length;
 
-            return { offer: offerCount, active: hotCount, passive: applications.filter(a => a.category === 'passive').length, closed: closedCount };
+            const kpiClosed = document.getElementById('kpi-closed');
+            if (kpiClosed) kpiClosed.innerText = closed;
+
+            // Render Table
+            renderTable(applications);
+
+            // Init Chart
+            initChart(offer, hot, passive, closed);
+            
+            // Confetti
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
         }
 
-        // 2. Render Table
         function renderTable(data) {
-            tableBody.innerHTML = '';
+            const tbody = document.getElementById('tableBody');
+            if (!tbody) return;
             
-            if (data.length === 0) {
-                noResults.classList.remove('hidden');
-            } else {
-                noResults.classList.add('hidden');
-                data.forEach(app => {
-                    // Color Logic
-                    let bgClass = `bg-${app.color}-100`;
-                    let textClass = `text-${app.color}-800`;
-                    
-                    const row = document.createElement('tr');
-                    row.className = 'hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-none';
-                    row.innerHTML = `
+            tbody.innerHTML = '';
+            data.forEach(app => {
+                const row = `
+                    <tr class="hover:bg-slate-50 border-b border-slate-50 last:border-none">
+                        <td class="px-6 py-4 font-medium text-slate-900">${app.company}</td>
+                        <td class="px-6 py-4 text-slate-500">${app.position}</td>
                         <td class="px-6 py-4">
-                            <div class="text-sm font-bold text-slate-900">${app.company}</div>
-                            <div class="text-xs text-slate-500">${app.position}</div>
-                        </td>
-                        <td class="px-6 py-4">
-                            <span class="status-badge px-2.5 py-0.5 rounded-full text-xs font-medium ${bgClass} ${textClass}">
+                            <span class="inline-block px-2 py-1 rounded-md text-xs font-bold bg-${app.color}-100 text-${app.color}-700 border border-${app.color}-200 mb-1">
                                 ${app.status}
                             </span>
+                            <div class="text-xs text-slate-500">${app.note}</div>
                         </td>
-                        <td class="px-6 py-4">
-                            <div class="text-xs text-slate-600">${app.note}</div>
-                        </td>
-                    `;
-                    tableBody.appendChild(row);
-                });
-            }
-            displayCount.innerText = data.length;
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
         }
 
-        // 3. Filter Logic
-        function filterData(category) {
-            // Update Buttons
+        function filterData(filter) {
             document.querySelectorAll('.filter-btn').forEach(btn => {
-                if(btn.dataset.filter === category) {
-                    btn.classList.remove('bg-white', 'text-slate-600', 'border', 'border-slate-200');
-                    btn.classList.add('bg-blue-600', 'text-white', 'shadow-sm');
+                if (btn.dataset.filter === filter) {
+                    btn.classList.remove('bg-white', 'text-slate-600', 'border');
+                    btn.classList.add('bg-blue-600', 'text-white');
                 } else {
-                    btn.classList.add('bg-white', 'text-slate-600', 'border', 'border-slate-200');
-                    btn.classList.remove('bg-blue-600', 'text-white', 'shadow-sm');
+                    btn.classList.add('bg-white', 'text-slate-600', 'border');
+                    btn.classList.remove('bg-blue-600', 'text-white');
                 }
             });
 
-            const searchTerm = searchInput.value.toLowerCase();
-            const filtered = applications.filter(app => {
-                const matchesCategory = category === 'all' || app.category === category;
-                const matchesSearch = app.company.toLowerCase().includes(searchTerm) || app.position.toLowerCase().includes(searchTerm);
-                return matchesCategory && matchesSearch;
-            });
-            renderTable(filtered);
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+            const filteredData = filter === 'all' 
+                ? applications 
+                : applications.filter(a => a.category === filter);
+            renderTable(filteredData);
         }
 
-        // 4. Init Chart
-        function initChart(data) {
+        function initChart(offer, active, passive, closed) {
             const ctx = document.getElementById('pipelineChart').getContext('2d');
+            if (!ctx) return;
+            
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Offer Accepted', 'Active / Hot', 'Passive', 'Closed'],
+                    labels: ['Offer Finalized', 'Active', 'Passive', 'Closed'],
                     datasets: [{
-                        data: [data.offer, data.active, data.passive, data.closed],
-                        backgroundColor: [
-                            '#10b981', // Emerald (Offer)
-                            '#3b82f6', // Blue (Active)
-                            '#94a3b8', // Slate (Passive)
-                            '#f43f5e'  // Rose (Closed)
-                        ],
-                        borderWidth: 0,
-                        hoverOffset: 4
+                        data: [offer, active, passive, closed],
+                        backgroundColor: ['#10b981', '#3b82f6', '#94a3b8', '#f43f5e'],
+                        borderWidth: 0
                     }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { usePointStyle: true, padding: 20, font: { family: "'Inter', sans-serif" } }
-                        }
-                    },
-                    cutout: '75%'
-                }
+                options: { responsive: true, cutout: '75%', plugins: { legend: { position: 'bottom' } } }
             });
         }
-
-        // --- INITIALIZATION ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const stats = updateKPIs();
-            renderTable(applications);
-            initChart(stats);
-
-            // Search Listener
-            searchInput.addEventListener('input', () => {
-                const activeBtn = document.querySelector('.filter-btn.bg-blue-600'); // Check which filter is active by class presence
-                // Simplified: just trigger the filter function with current active category logic, 
-                // but for simplicity here we assume 'all' or logic inside filterData handles it.
-                // To do it right:
-                let currentCategory = 'all';
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    if (btn.classList.contains('bg-blue-600')) currentCategory = btn.dataset.filter;
-                });
-                filterData(currentCategory);
-            });
-        });
     </script>
 </body>
 </html>
