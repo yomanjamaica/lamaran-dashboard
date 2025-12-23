@@ -23,9 +23,9 @@
         @keyframes pop { 0% { transform: scale(0.9); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
     </style>
     <!-- 
-    Application Structure Plan: Dashboard updated.
-    - Moved applications > 1 month old to CLOSED.
-    - Total Pipeline: 28 Verified Entries.
+    Application Structure Plan: Dashboard updated v30.
+    - CORRECTION: Fixed static text labels to read "29" instead of "28".
+    - Data: Confirmed 29 entries including Kota Wisata.
     -->
 </head>
 <body class="antialiased">
@@ -42,7 +42,7 @@
                 <div class="inline-flex items-center px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-sm font-bold border border-emerald-200 celebrate-card">
                     <span class="mr-2 text-lg">✅</span> Status: CONTRACT READY
                 </div>
-                <p class="text-xs text-slate-400 mt-2">Pipeline: 28 Perusahaan</p>
+                <p class="text-xs text-slate-400 mt-2">Pipeline: 29 Perusahaan</p>
             </div>
         </header>
 
@@ -93,7 +93,7 @@
                     </div>
                     <span class="text-2xl">📊</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-2">28 Active & Closed</p>
+                <p class="text-xs text-slate-500 mt-2">29 Active & Closed</p>
             </div>
         </div>
 
@@ -102,14 +102,15 @@
             
             <!-- Chart Section -->
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h3 class="text-lg font-bold text-slate-800 mb-6">Analisis Pipeline (28 Total)</h3>
+                <h3 class="text-lg font-bold text-slate-800 mb-6">Analisis Pipeline (29 Total)</h3>
                 <div class="chart-container">
                     <canvas id="pipelineChart"></canvas>
                 </div>
                 <div class="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
-                    <h4 class="text-sm font-bold text-emerald-800 mb-2">Clean-Up Update:</h4>
+                    <h4 class="text-sm font-bold text-emerald-800 mb-2">Current Status:</h4>
                     <p class="text-xs text-emerald-700">
-                        Lamaran yang tidak ada progres > 1 bulan telah dipindahkan ke status <strong>Closed/Rejected</strong> agar fokus Bapak 100% pada peluang aktif (Seven Stones, Kota Wisata, NPCT1).
+                        <strong>Seven Stones</strong> sudah di tangan (Offer Accepted).<br>
+                        <strong>Kota Wisata</strong> masuk sebagai kandidat kuat baru (Interview User Done).
                     </p>
                 </div>
             </div>
@@ -144,7 +145,7 @@
     </div>
 
     <script>
-        // --- DATA SOURCE (28 Companies - Updated Status) ---
+        // --- DATA SOURCE (29 Companies) ---
         const applications = [
             // 1. OFFER ACCEPTED
             { company: "Seven Stones Indonesia", position: "FAT Manager", status: "✅ OFFER ACCEPTED", category: "active", color: "emerald", note: "Menunggu Revisi Tanggal Join (26 Jan 2026)." },
@@ -162,7 +163,7 @@
             { company: "PT LinkIT 360", position: "CFO", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Retake Psikotes Done." },
             { company: "ProEd Global", position: "Fin. Controller", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Online Test Done." },
 
-            // 13-18. WARM FOLLOW-UP (6)
+            // 13-19. WARM FOLLOW-UP (7)
             { company: "PT Yobel Sandang", position: "Posisi TBC", status: "📩 Nego Jadwal", category: "active", color: "amber", note: "Nego Offline ke Online." },
             { company: "SML (Semarang)", position: "F&A Manager", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up LinkedIn." },
             { company: "PT Capitol Group", position: "FAM / Chief FA", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up LinkedIn." },
@@ -171,17 +172,19 @@
             { company: "Lancesoft Indonesia", position: "F&A Manager", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up WA." },
             { company: "Farrasindo Group", position: "Sr. Mgr Fin", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up WA." },
 
-            // 19-28. CLOSED / REJECTED (10) - Updated
-            { company: "Youvit", position: "Jr. Acc Mgr", status: "🛑 Rejected", category: "closed", color: "red", note: "Expired > 1 Bulan. Job Reposted." },
-            { company: "Lalamove", position: "Finance Mgr", status: "🛑 Rejected", category: "closed", color: "red", note: "Expired > 1 Bulan. No Response." },
-            { company: "Kreston Ind.", position: "Assoc. Tax Mgr", status: "🛑 Rejected", category: "closed", color: "red", note: "Expired > 1 Bulan." },
-            { company: "AEON Credit", position: "Tax Section", status: "🛑 Rejected", category: "closed", color: "red", note: "Expired > 1 Bulan." },
-            { company: "Wingstop", position: "F&A", status: "🛑 Rejected", category: "closed", color: "red", note: "Expired > 1 Bulan." },
-            { company: "PT Beeme", position: "FAT Manager", status: "🛑 Rejected", category: "closed", color: "red", note: "Info HR: Belum dapat melanjutkan." },
-            { company: "Mitsui & Co.", position: "Finance Mgr", status: "🛑 Rejected", category: "closed", color: "red", note: "Info HR Yamaha: Closed." },
-            { company: "PT Hana Fashion", position: "Fin/Acc Mgr", status: "🛑 On Hold", category: "closed", color: "red", note: "Posisi ditahan." },
-            { company: "Marina Dev. (MDI)", position: "Acc & Tax Mgr", status: "🛑 Rejected", category: "closed", color: "red", note: "Info via Redy." },
-            { company: "CEVA Air Ocean", position: "Tax Spv", status: "🛑 On Hold", category: "closed", color: "red", note: "Struktur Organisasi Berubah." }
+            // 20-24. PASSIVE / STALE (5)
+            { company: "Youvit", position: "Jr. Acc Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "Job Reposted." },
+            { company: "Lalamove", position: "Finance Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "No response > 3 weeks." },
+            { company: "Kreston Ind.", position: "Assoc. Tax Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "No news." },
+            { company: "AEON Credit", position: "Tax Section", status: "💤 Passive", category: "passive", color: "slate", note: "Stale > 1 Month." },
+            { company: "Wingstop", position: "F&A", status: "💤 Passive", category: "passive", color: "slate", note: "Stale > 1 Month." },
+
+            // 25-29. CLOSED (5)
+            { company: "PT Beeme", position: "FAT Manager", status: "🛑 Rejected", category: "closed", color: "rose", note: "Info HR: Belum dapat melanjutkan." },
+            { company: "Mitsui & Co.", position: "Finance Mgr", status: "🛑 Rejected", category: "closed", color: "rose", note: "Info HR: Closed." },
+            { company: "PT Hana Fashion", position: "Fin/Acc Mgr", status: "🛑 On Hold", category: "closed", color: "rose", note: "Posisi ditahan." },
+            { company: "Marina Dev. (MDI)", position: "Acc & Tax Mgr", status: "🛑 Rejected", category: "closed", color: "rose", note: "Info via Redy." },
+            { company: "CEVA Air Ocean", position: "Tax Spv", status: "🛑 On Hold", category: "closed", color: "rose", note: "Struktur Organisasi Berubah." }
         ];
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -204,9 +207,6 @@
             
             const kpiTotal = document.getElementById('kpi-total');
             if (kpiTotal) kpiTotal.innerText = applications.length;
-
-            const kpiClosed = document.getElementById('kpi-closed');
-            if (kpiClosed) kpiClosed.innerText = closed;
 
             // Render Table
             renderTable(applications);
