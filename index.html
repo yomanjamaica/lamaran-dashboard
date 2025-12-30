@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Monitoring Lamaran Kerja - Fernando Hasiholan</title>
+    <title>Victory Dashboard - Fernando Hasiholan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -15,49 +15,62 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         .chart-container { position: relative; width: 100%; max-width: 600px; height: 350px; margin: 0 auto; }
-        .status-badge { transition: all 0.2s; }
-        .status-badge:hover { transform: scale(1.05); }
         .kpi-card { transition: transform 0.2s, box-shadow 0.2s; }
         .kpi-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .celebrate-card { animation: pop 0.6s ease-out; }
-        @keyframes pop { 0% { transform: scale(0.9); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        
+        /* Timeline Styles */
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #e2e8f0;
+            z-index: 0;
+            transform: translateY(-50%);
+        }
+        .timeline-step { z-index: 10; position: relative; background: white; }
     </style>
-    <!-- 
-    Application Structure Plan: Dashboard updated v30.
-    - CORRECTION: Fixed static text labels to read "29" instead of "28".
-    - Data: Confirmed 29 entries including Kota Wisata.
-    -->
 </head>
-<body class="antialiased">
+<body class="antialiased pb-12">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- Header -->
-        <header class="mb-8 border-b border-slate-200 pb-6 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-                <h1 class="text-3xl font-bold text-slate-900">Dashboard Kemenangan</h1>
-                <p class="text-slate-500 mt-1">Fernando Hasiholan, SE., CTT, CPTT</p>
-            </div>
-            <div class="text-right">
-                <div class="inline-flex items-center px-4 py-2 rounded-full bg-emerald-100 text-emerald-800 text-sm font-bold border border-emerald-200 celebrate-card">
-                    <span class="mr-2 text-lg">✅</span> Status: CONTRACT READY
+        <!-- Victory Header -->
+        <header class="mb-8 bg-gradient-to-r from-emerald-600 to-teal-700 rounded-2xl p-6 text-white shadow-lg flex flex-col md:flex-row justify-between items-center relative overflow-hidden">
+            <!-- Decorative background circles -->
+            <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-white opacity-10"></div>
+            <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-40 h-40 rounded-full bg-white opacity-10"></div>
+
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full uppercase tracking-wider">Mission Accomplished</span>
+                    <span class="text-emerald-100 text-sm">29 Pipeline Processed</span>
                 </div>
-                <p class="text-xs text-slate-400 mt-2">Pipeline: 29 Perusahaan</p>
+                <h1 class="text-3xl md:text-4xl font-bold">Offer Signed & Locked! 🚀</h1>
+                <p class="text-emerald-100 mt-2 text-lg">Fernando Hasiholan ➔ Seven Stones Indonesia</p>
+            </div>
+            <div class="relative z-10 mt-6 md:mt-0 text-center md:text-right">
+                <p class="text-sm font-medium text-emerald-100 uppercase tracking-wide">Start Date</p>
+                <p class="text-4xl font-bold">26 JAN 2026</p>
+                <button onclick="triggerConfetti()" class="mt-3 bg-white text-emerald-700 hover:bg-emerald-50 px-4 py-2 rounded-lg text-sm font-bold shadow transition">
+                    Rayakan Lagi 🎉
+                </button>
             </div>
         </header>
 
-        <!-- KPI Cards -->
+        <!-- KPI Summary -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <!-- Win Card -->
-            <div class="kpi-card bg-gradient-to-br from-emerald-500 to-teal-600 p-5 rounded-xl text-white shadow-lg">
+            <!-- Status Card -->
+            <div class="kpi-card bg-white p-5 rounded-xl border-l-4 border-emerald-500 shadow-sm">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs font-bold text-emerald-100 uppercase">Status Final</p>
-                        <h3 class="text-3xl font-bold mt-1">Signed!</h3>
+                        <p class="text-xs font-bold text-slate-500 uppercase">Current Status</p>
+                        <h3 class="text-2xl font-bold text-emerald-600 mt-1">Hired</h3>
                     </div>
-                    <span class="text-3xl">📝</span>
+                    <span class="text-2xl bg-emerald-100 p-2 rounded-lg">🤝</span>
                 </div>
-                <p class="text-xs text-emerald-100 mt-3 font-medium">Menunggu Draft Kontrak (Probation)</p>
+                <p class="text-xs text-slate-500 mt-2">Offering Letter Signed</p>
             </div>
 
             <!-- Financial Impact -->
@@ -67,33 +80,97 @@
                         <p class="text-xs font-bold text-slate-500 uppercase">Kenaikan Gaji</p>
                         <h3 class="text-2xl font-bold text-blue-600 mt-1">+40.45%</h3>
                     </div>
-                    <span class="text-2xl">📈</span>
+                    <span class="text-2xl bg-blue-100 p-2 rounded-lg">📈</span>
                 </div>
                 <p class="text-xs text-slate-500 mt-2">Rp 10.6M ➔ Rp 15.0M (Net)</p>
             </div>
 
-            <!-- Hot Prospects -->
-            <div class="kpi-card bg-white p-5 rounded-xl border-l-4 border-amber-400 shadow-sm">
+            <!-- Resignation Date -->
+            <div class="kpi-card bg-white p-5 rounded-xl border-l-4 border-rose-500 shadow-sm">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs font-bold text-slate-500 uppercase">Hot Prospects</p>
-                        <h3 class="text-2xl font-bold text-slate-900 mt-1" id="kpi-hot">0</h3>
+                        <p class="text-xs font-bold text-slate-500 uppercase">Resign Date</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1">29 Des '25</h3>
                     </div>
-                    <span class="text-2xl">🔥</span>
+                    <span class="text-2xl bg-rose-100 p-2 rounded-lg">👋</span>
                 </div>
-                <p class="text-xs text-amber-600 mt-2">Kota Wisata, NPCT1, Yamaha</p>
+                <p class="text-xs text-slate-500 mt-2">Submission Date</p>
             </div>
 
-            <!-- Total Pipeline -->
-            <div class="kpi-card bg-white p-5 rounded-xl border-l-4 border-slate-400 shadow-sm">
+            <!-- Effective Date -->
+            <div class="kpi-card bg-white p-5 rounded-xl border-l-4 border-indigo-500 shadow-sm">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-xs font-bold text-slate-500 uppercase">Total Pipeline</p>
-                        <h3 class="text-2xl font-bold text-slate-900 mt-1" id="kpi-total">0</h3>
+                        <p class="text-xs font-bold text-slate-500 uppercase">Effective Until</p>
+                        <h3 class="text-2xl font-bold text-slate-900 mt-1">28 Jan '26</h3>
                     </div>
-                    <span class="text-2xl">📊</span>
+                    <span class="text-2xl bg-indigo-100 p-2 rounded-lg">🗓️</span>
                 </div>
-                <p class="text-xs text-slate-500 mt-2">29 Active & Closed</p>
+                <p class="text-xs text-slate-500 mt-2">Last Day Status Karyawan</p>
+            </div>
+        </div>
+
+        <!-- NEW: Transition Timeline Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-8">
+            <h3 class="text-lg font-bold text-slate-800 mb-8 flex items-center">
+                <span class="bg-slate-800 text-white p-1 rounded mr-2 text-xs">PLAN</span> 
+                Roadmap Transisi Karir
+            </h3>
+            
+            <div class="relative flex flex-col md:flex-row justify-between items-center gap-8 md:gap-0">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block timeline-line"></div>
+
+                <!-- Step 1: Resign -->
+                <div class="timeline-step flex flex-col items-center text-center w-full md:w-1/4">
+                    <div class="w-12 h-12 rounded-full bg-rose-100 border-4 border-white shadow-md flex items-center justify-center text-xl mb-3 z-10">
+                        📨
+                    </div>
+                    <div class="font-bold text-slate-800">29 Des 2025</div>
+                    <div class="text-sm font-semibold text-rose-600">Submit Resign</div>
+                    <div class="text-xs text-slate-500 mt-1">Maersk / Seacon</div>
+                </div>
+
+                <!-- Step 2: Cuti Period -->
+                <div class="timeline-step flex flex-col items-center text-center w-full md:w-1/4">
+                    <div class="w-12 h-12 rounded-full bg-amber-100 border-4 border-white shadow-md flex items-center justify-center text-xl mb-3 z-10">
+                        🏖️
+                    </div>
+                    <div class="font-bold text-slate-800">26, 27, 28 Jan</div>
+                    <div class="text-sm font-semibold text-amber-600">Ambil Cuti</div>
+                    <div class="text-xs text-slate-500 mt-1">Menghabiskan sisa cuti</div>
+                </div>
+
+                <!-- Step 3: New Start -->
+                <div class="timeline-step flex flex-col items-center text-center w-full md:w-1/4">
+                    <div class="w-14 h-14 rounded-full bg-emerald-500 border-4 border-white shadow-lg flex items-center justify-center text-2xl mb-3 z-10 text-white animate-pulse">
+                        🚀
+                    </div>
+                    <div class="font-bold text-emerald-700 text-lg">26 Jan 2026</div>
+                    <div class="text-sm font-bold text-emerald-600 uppercase">Hari Pertama</div>
+                    <div class="text-xs text-slate-500 mt-1">Seven Stones Bali</div>
+                </div>
+
+                <!-- Step 4: Final Release -->
+                <div class="timeline-step flex flex-col items-center text-center w-full md:w-1/4">
+                    <div class="w-12 h-12 rounded-full bg-indigo-100 border-4 border-white shadow-md flex items-center justify-center text-xl mb-3 z-10">
+                        🏁
+                    </div>
+                    <div class="font-bold text-slate-800">28 Jan 2026</div>
+                    <div class="text-sm font-semibold text-indigo-600">Official Release</div>
+                    <div class="text-xs text-slate-500 mt-1">Status Karyawan Maersk Berakhir</div>
+                </div>
+            </div>
+
+            <!-- Note Box -->
+            <div class="mt-8 bg-blue-50 border border-blue-100 rounded-lg p-4 flex items-start gap-3">
+                <span class="text-xl">💡</span>
+                <div>
+                    <h4 class="font-bold text-blue-800 text-sm">Strategi Overlap</h4>
+                    <p class="text-xs text-blue-700">
+                        Pada tanggal <strong>26, 27, dan 28 Januari 2026</strong>, Anda secara teknis memiliki dua status aktif (Cuti di Maersk & Onboarding di Seven Stones). Pastikan laptop/aset Maersk dikembalikan sebelum tanggal 26 atau diatur penyerahannya agar tidak mengganggu hari pertama kerja.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -102,15 +179,17 @@
             
             <!-- Chart Section -->
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
-                <h3 class="text-lg font-bold text-slate-800 mb-6">Analisis Pipeline (29 Total)</h3>
+                <h3 class="text-lg font-bold text-slate-800 mb-6">Analisis Akhir Pipeline</h3>
                 <div class="chart-container">
                     <canvas id="pipelineChart"></canvas>
                 </div>
                 <div class="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
-                    <h4 class="text-sm font-bold text-emerald-800 mb-2">Current Status:</h4>
+                    <h4 class="text-sm font-bold text-emerald-800 mb-2">The Winner:</h4>
                     <p class="text-xs text-emerald-700">
-                        <strong>Seven Stones</strong> sudah di tangan (Offer Accepted).<br>
-                        <strong>Kota Wisata</strong> masuk sebagai kandidat kuat baru (Interview User Done).
+                        <strong>Seven Stones Indonesia</strong>.<br>
+                        Posisi: FAT Manager.<br>
+                        Lokasi: Bali.<br>
+                        Status: Signed.
                     </p>
                 </div>
             </div>
@@ -120,7 +199,7 @@
                 <!-- Filter Tabs -->
                 <div class="p-4 border-b border-slate-100 bg-slate-50 rounded-t-xl flex gap-2 overflow-x-auto">
                     <button onclick="filterData('all')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-md bg-blue-600 text-white shadow-sm" data-filter="all">All</button>
-                    <button onclick="filterData('active')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-md bg-white text-slate-600 border hover:bg-slate-50" data-filter="active">Active</button>
+                    <button onclick="filterData('active')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-md bg-white text-slate-600 border hover:bg-slate-50" data-filter="active">Active/Offer</button>
                     <button onclick="filterData('closed')" class="filter-btn px-3 py-1.5 text-xs font-medium rounded-md bg-white text-slate-600 border hover:bg-slate-50" data-filter="closed">Closed</button>
                 </div>
 
@@ -147,23 +226,23 @@
     <script>
         // --- DATA SOURCE (29 Companies) ---
         const applications = [
-            // 1. OFFER ACCEPTED
-            { company: "Seven Stones Indonesia", position: "FAT Manager", status: "✅ OFFER ACCEPTED", category: "active", color: "emerald", note: "Menunggu Revisi Tanggal Join (26 Jan 2026)." },
+            // 1. THE WINNER
+            { company: "Seven Stones Indonesia", position: "FAT Manager", status: "🏆 OFFER SIGNED", category: "active", color: "emerald", note: "Start Date: 26 Jan 2026. Bali." },
 
-            // 2-12. HOT PROSPECTS (11)
-            { company: "Kota Wisata (Cibubur)", position: "Reporting Consolidation Spv", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Interview User (Bu Irene) Done (18 Des). Menunggu update Bu Grace." },
-            { company: "PT Yamaha Musik", position: "Asst. Mgr Acc Tax", status: "⏳ Scheduling", category: "active", color: "blue", note: "HR offer via WA. Menunggu Jadwal Interview." },
-            { company: "NPCT1 (New Priok)", position: "Accounting Exec", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Interview User Done. Menunggu hasil." },
-            { company: "SKINTIFIC", position: "Accounting Manager", status: "⏳ Interview HR Done", category: "active", color: "blue", note: "Interview HR Done. Menunggu User." },
+            // 2-12. BACKUP / HOT PROSPECTS (Keep specific names as backup)
+            { company: "Kota Wisata (Cibubur)", position: "Reporting Spv", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Backup Utama. Interview User Done." },
+            { company: "PT Yamaha Musik", position: "Asst. Mgr Acc Tax", status: "⏳ Scheduling", category: "active", color: "blue", note: "Backup. Menunggu Jadwal Interview." },
+            { company: "NPCT1 (New Priok)", position: "Accounting Exec", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Interview User Done." },
+            { company: "SKINTIFIC", position: "Accounting Manager", status: "⏳ Interview HR Done", category: "active", color: "blue", note: "Proses lanjut (keep warm)." },
             { company: "Kirim Kirim ID", position: "FAT Manager", status: "⏳ Waiting Feedback", category: "active", color: "blue", note: "Interview Founder Done." },
-            { company: "NAT Indonesia", position: "FTA Supervisor", status: "⏳ Interview 1 Done", category: "active", color: "blue", note: "Nego Title Manager. Menunggu jadwal user." },
-            { company: "PT Sonton Food", position: "Acc & Tax Jr. Mgr", status: "⏳ Screening Done", category: "active", color: "blue", note: "Screening Done. Menunggu User." },
+            { company: "NAT Indonesia", position: "FTA Supervisor", status: "⏳ Interview 1 Done", category: "active", color: "blue", note: "Menunggu jadwal user." },
+            { company: "PT Sonton Food", position: "Acc & Tax Jr. Mgr", status: "⏳ Screening Done", category: "active", color: "blue", note: "Screening Done." },
             { company: "PT Citarasa Kuliner", position: "Finance Manager", status: "⏳ Waiting Test", category: "active", color: "blue", note: "Menunggu Link Psikotes." },
             { company: "PT AQS Group", position: "Finance Manager", status: "⏳ Waiting Feedback", category: "active", color: "blue", note: "Tes Selesai." },
             { company: "PT LinkIT 360", position: "CFO", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Retake Psikotes Done." },
             { company: "ProEd Global", position: "Fin. Controller", status: "⏳ Waiting Result", category: "active", color: "blue", note: "Online Test Done." },
 
-            // 13-19. WARM FOLLOW-UP (7)
+            // 13-19. WARM FOLLOW-UP
             { company: "PT Yobel Sandang", position: "Posisi TBC", status: "📩 Nego Jadwal", category: "active", color: "amber", note: "Nego Offline ke Online." },
             { company: "SML (Semarang)", position: "F&A Manager", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up LinkedIn." },
             { company: "PT Capitol Group", position: "FAM / Chief FA", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up LinkedIn." },
@@ -172,14 +251,14 @@
             { company: "Lancesoft Indonesia", position: "F&A Manager", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up WA." },
             { company: "Farrasindo Group", position: "Sr. Mgr Fin", status: "📩 Chat Sent", category: "active", color: "amber", note: "Follow-up WA." },
 
-            // 20-24. PASSIVE / STALE (5)
+            // 20-24. PASSIVE / STALE
             { company: "Youvit", position: "Jr. Acc Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "Job Reposted." },
             { company: "Lalamove", position: "Finance Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "No response > 3 weeks." },
             { company: "Kreston Ind.", position: "Assoc. Tax Mgr", status: "💤 Passive", category: "passive", color: "slate", note: "No news." },
             { company: "AEON Credit", position: "Tax Section", status: "💤 Passive", category: "passive", color: "slate", note: "Stale > 1 Month." },
             { company: "Wingstop", position: "F&A", status: "💤 Passive", category: "passive", color: "slate", note: "Stale > 1 Month." },
 
-            // 25-29. CLOSED (5)
+            // 25-29. CLOSED
             { company: "PT Beeme", position: "FAT Manager", status: "🛑 Rejected", category: "closed", color: "rose", note: "Info HR: Belum dapat melanjutkan." },
             { company: "Mitsui & Co.", position: "Finance Mgr", status: "🛑 Rejected", category: "closed", color: "rose", note: "Info HR: Closed." },
             { company: "PT Hana Fashion", position: "Fin/Acc Mgr", status: "🛑 On Hold", category: "closed", color: "rose", note: "Posisi ditahan." },
@@ -189,33 +268,41 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             updateDashboard();
+            triggerConfetti();
         });
+
+        function triggerConfetti() {
+            // Realistic confetti look
+            var count = 200;
+            var defaults = {
+                origin: { y: 0.7 }
+            };
+
+            function fire(particleRatio, opts) {
+                confetti(Object.assign({}, defaults, opts, {
+                    particleCount: Math.floor(count * particleRatio)
+                }));
+            }
+
+            fire(0.25, { spread: 26, startVelocity: 55, });
+            fire(0.2, { spread: 60, });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45, });
+        }
 
         function updateDashboard() {
             // Update KPIs
-            const offer = applications.filter(a => a.status.includes('Accepted')).length;
-            const hot = applications.filter(a => a.category === 'active' && !a.status.includes('Accepted') && a.color === 'blue').length;
-            const warm = applications.filter(a => a.category === 'active' && a.color === 'amber').length;
+            const offer = applications.filter(a => a.status.includes('SIGNED') || a.status.includes('ACCEPTED')).length;
+            const active = applications.filter(a => a.category === 'active' && !a.status.includes('SIGNED')).length;
             const passive = applications.filter(a => a.category === 'passive').length;
             const closed = applications.filter(a => a.category === 'closed').length;
-
-            const kpiOffer = document.getElementById('kpi-offer');
-            if (kpiOffer) kpiOffer.innerText = offer;
-
-            const kpiHot = document.getElementById('kpi-hot');
-            if (kpiHot) kpiHot.innerText = hot;
-            
-            const kpiTotal = document.getElementById('kpi-total');
-            if (kpiTotal) kpiTotal.innerText = applications.length;
 
             // Render Table
             renderTable(applications);
 
             // Init Chart
-            initChart(offer, hot, passive, closed);
-            
-            // Confetti
-            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            initChart(offer, active, passive, closed);
         }
 
         function renderTable(data) {
@@ -223,9 +310,15 @@
             if(!tbody) return;
             tbody.innerHTML = '';
             data.forEach(app => {
+                const isWinner = app.status.includes('SIGNED');
+                const rowClass = isWinner ? 'bg-emerald-50 border-emerald-100' : 'hover:bg-slate-50 border-b border-slate-50';
+                
                 const row = `
-                    <tr class="hover:bg-slate-50 border-b border-slate-50 last:border-none">
-                        <td class="px-6 py-4 font-medium text-slate-900">${app.company}</td>
+                    <tr class="${rowClass} last:border-none transition-colors">
+                        <td class="px-6 py-4 font-medium text-slate-900">
+                            ${app.company}
+                            ${isWinner ? '<span class="ml-2 text-xs bg-emerald-600 text-white px-2 py-0.5 rounded-full">WINNER</span>' : ''}
+                        </td>
                         <td class="px-6 py-4 text-slate-500">${app.position}</td>
                         <td class="px-6 py-4">
                             <span class="inline-block px-2 py-1 rounded-md text-xs font-bold bg-${app.color}-100 text-${app.color}-700 border border-${app.color}-200 mb-1">
@@ -250,9 +343,6 @@
                 }
             });
 
-            const searchInput = document.getElementById('searchInput');
-            const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
-
             const filteredData = filter === 'all' 
                 ? applications 
                 : applications.filter(a => a.category === filter);
@@ -265,7 +355,7 @@
             new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Offer Accepted', 'Active', 'Passive', 'Closed'],
+                    labels: ['Signed', 'Active Process', 'Passive', 'Closed/Rejected'],
                     datasets: [{
                         data: [offer, active, passive, closed],
                         backgroundColor: ['#10b981', '#3b82f6', '#94a3b8', '#f43f5e'],
@@ -273,7 +363,13 @@
                         hoverOffset: 4
                     }]
                 },
-                options: { responsive: true, cutout: '75%', plugins: { legend: { position: 'bottom' } } }
+                options: { 
+                    responsive: true, 
+                    cutout: '70%', 
+                    plugins: { 
+                        legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8 } } 
+                    } 
+                }
             });
         }
     </script>
